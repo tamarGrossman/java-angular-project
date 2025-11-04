@@ -1,0 +1,37 @@
+
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="logo">אתגרי כושר ובריאות</div>
+  <div class="nav-links">
+    <a routerLink="">Home</a>
+    <a routerLink="/all-challenges">All Challenges</a>
+    <a routerLink="/register">Register / Login</a>
+    <a routerLink="/profile">Profile</a>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>אתגרי כושר ובריאות שיעזרו לך לשפר את החיים!</h1>
+    <p>הצטרפי עכשיו לאתגרים ותראי איך הגוף והנפש שלך משתפרים!</p>
+    <div class="hero-buttons">
+      <button (click)="navigateTo('challenges')">צפה בכל האתגרים</button>
+      <button (click)="navigateTo('/register')">הצטרפי לאתגר</button>
+      <button (click)="navigateTo('createChallenge')">העלאת אתגר</button>
+    </div>
+  </div>
+</section>
+
+<!-- Popular Challenges -->
+<section class="popular-challenges">
+  <h2>אתגרים פופולריים</h2>
+  <div class="cards-container">
+    <div class="challenge-card" *ngFor="let challenge of popularChallenges">
+      <h3>{{ challenge.title }}</h3>
+      <p>{{ challenge.description }}</p>
+      <button (click)="navigateTo('/all-challenges')">לפרטים</button>
+    </div>
+  </div>
+</section>

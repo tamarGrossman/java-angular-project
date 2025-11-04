@@ -1,0 +1,106 @@
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0d6efd;
+  padding: 1rem 2rem;
+  color: white;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar .nav-links a {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+.navbar .nav-links a:hover {
+  text-decoration: underline;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+  background-size: cover;
+  background-position: center;
+  color: white;
+  height: 60vh;
+  position: relative;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-buttons button {
+  margin: 1rem;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  background-color: #ffc107;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.hero-buttons button:hover {
+  background-color: #e0a800;
+}
+
+/* Popular Challenges */
+.popular-challenges {
+  padding: 2rem;
+  text-align: center;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.challenge-card {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 250px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.challenge-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.challenge-card button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #0d6efd;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.challenge-card button:hover {
+  background-color: #084298;
+}

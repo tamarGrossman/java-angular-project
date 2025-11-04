@@ -1,0 +1,17 @@
+
+<div class="all-challenges-container">
+  <h2>כל האתגרים</h2>
+
+  <div *ngIf="challengeList.length === 0">
+    עדיין אין אתגרים להצגה.
+  </div>
+
+  <ul *ngIf="challengeList.length > 0" class="challenge-list">
+    <li *ngFor="let challenge of challengeList" class="challenge-item">
+      <h3>{{ challenge.name }}</h3>
+      <p>{{ challenge.description }}</p>
+      <p><strong>תאריך העלאה  :</strong> {{ challenge.date  }}</p>
+      <p><strong>משך האתגר :</strong> {{ challenge.numOfDays  }}</p>
+    </li>
+  </ul>
+</div>
