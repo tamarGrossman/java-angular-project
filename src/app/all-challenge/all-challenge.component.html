@@ -1,4 +1,3 @@
-
 <div class="all-challenges-container">
   <h2>כל האתגרים</h2>
 
@@ -8,10 +7,19 @@
 
   <ul *ngIf="challengeList.length > 0" class="challenge-list">
     <li *ngFor="let challenge of challengeList" class="challenge-item">
+      
+      <img 
+        [src]="getImageSource(challenge.picture)" 
+        alt="תמונה לאתגר {{ challenge.name }}"
+        class="challenge-image"
+        
+        onerror="this.onerror=null; this.src='assets/default-challenge.png';"
+      />
+      <h3>{{ challenge.picture }}</h3>
       <h3>{{ challenge.name }}</h3>
       <p>{{ challenge.description }}</p>
-      <p><strong>תאריך העלאה  :</strong> {{ challenge.date  }}</p>
-      <p><strong>משך האתגר :</strong> {{ challenge.numOfDays  }}</p>
+      <p><strong>תאריך העלאה :</strong> {{ challenge.date }}</p>
+      <p><strong>משך האתגר :</strong> {{ challenge.numOfDays }}</p>
     </li>
   </ul>
 </div>
