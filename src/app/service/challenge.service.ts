@@ -12,7 +12,7 @@ export class ChallengeService {
     private baseUrl = 'http://localhost:8080/api/challenges';
     
     getAllChallenges():Observable<Challenge[]>{
-      return this.http.get<Challenge[]>(`${this.baseUrl}/getChallenges`);
+      return this.http.get<Challenge[]>(`${this.baseUrl}/getAll`);
     }
     
     /**
@@ -36,6 +36,6 @@ export class ChallengeService {
       }));
   
       // 4. שליחת הבקשה לפונקציה createChallenge
-      return this.http.post<Challenge>(`${this.baseUrl}/createChallenge`, formData);
+      return this.http.post<Challenge>(`${this.baseUrl}/create`, formData);
     }
   }
