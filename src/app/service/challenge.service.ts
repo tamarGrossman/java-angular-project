@@ -36,6 +36,7 @@ export class ChallengeService {
       }));
   
       // 4. שליחת הבקשה לפונקציה createChallenge
-      return this.http.post<Challenge>(`${this.baseUrl}/create`, formData);
+      return this.http.post<Challenge>(`${this.baseUrl}/create`, formData,{withCredentials: true})
+      ;
     }
   }

@@ -20,7 +20,7 @@ export class CreateChallengeComponent {
     description: '',
     date: new Date(), // ערך ברירת מחדל
     numOfDays: 0,
-    userId: 1 // **חשוב:** החלף ב-ID המשתמש האמיתי שצריך להגיע מהלוגין/אפליקציה
+    userId: 0 // **חשוב:** החלף ב-ID המשתמש האמיתי שצריך להגיע מהלוגין/אפליקציה
   };
   selectedFile: File | null = null;
   uploading = false;
@@ -76,6 +76,12 @@ export class CreateChallengeComponent {
       error: (err) => {
         console.error('שגיאה בהעלאת האתגר:', err);
         this.errorMessage = 'אירעה שגיאה במהלך העלאת האתגר. אנא נסה שוב.';
+        // 💡 שורה שונתה: טיפול בשגיאת אימות (401/403)
+        if (err.status === 401 || err.status === 403) {
+          this.errorMessage = 'שגיאת אימות: עליך להיות מחובר כדי להעלות אתגר.'; // 💡 שורה שונתה
+        } else {
+          this.errorMessage = 'אירעה שגיאה במהלך העלאת האתגר. אנא נסה שוב.';
+        }
         this.uploading = false;
       }
     });

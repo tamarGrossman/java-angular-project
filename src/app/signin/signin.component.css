@@ -1,0 +1,138 @@
+/* --------------------------
+   מבנה ומיקום כללי
+   -------------------------- */
+
+/* מרכז את התוכן של הדף כולו (או של הקומפוננטה הראשית) */
+:host {
+    display: flex; 
+    justify-content: center; /* מרכז אופקית */
+    align-items: center; /* מרכז אנכית */
+    min-height: 80vh; 
+    background-color: #f7f7f7; 
+}
+
+/* קונטיינר הטופס */
+.form-container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* צל עדין וברור */
+    width: 100%;
+    max-width: 450px; /* רוחב נוח יותר */
+    text-align: right; 
+    direction: rtl; /* תומך בכיווניות מימין לשמאל */
+}
+
+h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* --------------------------
+   פריסת שורות הטופס (תיקון "הקפיצה")
+   -------------------------- */
+
+.form-row {
+    display: flex;
+    align-items: flex-start; /* יישור התוכן לתחילת השורה */
+    margin-bottom: 18px;
+    gap: 15px; /* רווח בין התווית לשדה */
+}
+
+.form-row label {
+    flex-basis: 90px; /* רוחב קבוע לתווית */
+    flex-shrink: 0; /* מונע מהתווית להתכווץ */
+    margin-top: 5px; /* יישור קו טוב יותר עם ה-input */
+    color: #555;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-align: right;
+}
+
+.input-wrapper {
+    flex-grow: 1; /* נותן לשדה הקלט את כל שאר הרוחב הפנוי */
+}
+
+/* --------------------------
+   אלמנטי קלט
+   -------------------------- */
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box; 
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #007bff; 
+    outline: none; 
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* --------------------------
+   כפתור והודעות
+   -------------------------- */
+
+button[type="submit"] {
+    width: 100%;
+    background-color: #198754; /* ירוק כהה יותר, בולט */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s, opacity 0.3s;
+    margin-top: 15px;
+}
+
+button[type="submit"]:hover {
+    background-color: #157347;
+}
+
+button[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.message {
+    text-align: center;
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    background-color: #e9f7e9; /* רקע ירוק בהיר להודעות */
+    color: #198754;
+    border: 1px solid #c3e6cb;
+}
+
+/* עיצוב שגיאות ולידציה */
+small {
+    color: #dc3545; /* אדום לשגיאות */
+    display: block;
+    margin-top: 5px;
+    font-size: 0.85rem;
+    text-align: right;
+}
+
+/* מצב הצלחה (כבר מחובר) */
+.success-state {
+    text-align: center;
+    padding: 20px;
+}
+
+.success-state h3 {
+    color: #198754;
+    margin-bottom: 10px;
+}

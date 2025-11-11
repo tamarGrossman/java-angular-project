@@ -27,17 +27,25 @@ export class SignupComponent {
 
   onSubmit() {
     this.usersService.signup(this.user).subscribe({
-      next: (res) => {
-        this.message = 'ההרשמה בוצעה בהצלחה!';
-        console.log(res);
-      },
-      error: (err) => {
-        if (err.status === 400) {
-          this.message = 'שם המשתמש כבר קיים במערכת.';
-        } else {
-          this.message = 'שגיאה בהרשמה, נסי שוב.';
-        }
-        console.error(err);
-      }
-    });
-  }}
+    next: (response) => {
+        console.log('הרישום בוצע בהצלחה:', response);
+        this.message = `הרישום בוצע בהצלחה! ברוך הבא, ${response}`;
+    },
+    error: (err) => {
+    console.error('שגיאה ברישום:', err);
+
+    // בדיקה לפי קוד סטטוס HTTP
+    if (err.status === 409) {
+        // סטטוס 409: שם המשתמש כבר קיים במאגר
+        this.message = err.error || 'שם משתמש זה כבר קיים במערכת.';
+    } else if (err.status === 403) {
+        // סטטוס 403: מנסה להירשם בזמן שהוא כבר מחובר
+        this.message = err.error || 'את/ה כבר מחובר/ת. יש להתנתק.';
+    } else {
+        // כל שגיאה אחרת (400 כללי, 500 וכו')
+        this.message = 'שגיאה כללית ברישום. נסה שוב.';
+    }
+}
+});
+}
+}
