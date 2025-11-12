@@ -1,0 +1,19 @@
+<div class="signout-container">
+    
+    @if (isLoggedIn) {
+        <ng-container>
+            
+            <button (click)="onSignout()" class="btn btn-danger">
+                התנתקות
+            </button>
+            
+        </ng-container>
+    }
+
+    @if (message) {
+        <p class="message-status">
+            {{ message }}
+        </p>
+    }
+    
+</div>

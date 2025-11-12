@@ -40,7 +40,7 @@ export class SignupComponent {
         this.message = err.error || 'שם משתמש זה כבר קיים במערכת.';
     } else if (err.status === 403) {
         // סטטוס 403: מנסה להירשם בזמן שהוא כבר מחובר
-        this.message = err.error || 'את/ה כבר מחובר/ת. יש להתנתק.';
+        this.message = err.error ;
     } else {
         // כל שגיאה אחרת (400 כללי, 500 וכו')
         this.message = 'שגיאה כללית ברישום. נסה שוב.';

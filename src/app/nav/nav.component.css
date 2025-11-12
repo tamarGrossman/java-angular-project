@@ -1,0 +1,98 @@
+/* --------------------------
+   Navbar הראשי
+   -------------------------- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* מרכז את כל התוכן */
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  z-index: 1000;
+  direction: rtl;
+  flex-wrap: wrap; /* מאפשר שבירה לשורה שנייה אם צריך */
+  font-family: 'Heebo', Arial, sans-serif;
+}
+
+/* --------------------------
+   לוגו במרכז
+   -------------------------- */
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1abc9c;
+  text-align: center; /* במרכז */
+  white-space: nowrap; /* לא נשבר לשורות */
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+/* --------------------------
+   קישורי ניווט
+   -------------------------- */
+.nav-links {
+  display: flex;
+  justify-content: center; /* מרכז את הקישורים */
+  flex-wrap: wrap; /* מאפשר ירידה לשורה נוספת אם אין מקום */
+  gap: 12px;
+  overflow-x: auto; 
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  margin-top: 6px;
+}
+
+.nav-links::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #34495e;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-links a:hover {
+  color: #1abc9c;
+  background-color: #f7f7f7;
+}
+
+/* --------------------------
+   רווח מתחת ל-navbar
+   -------------------------- */
+body {
+  padding-top: 80px; /* כדי שהתוכן לא יתחבא מאחורי ה-navbar */
+}
+
+/* --------------------------
+   מסכים קטנים
+   -------------------------- */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+  }
+
+  .nav-links {
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .nav-links a {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+  }
+}

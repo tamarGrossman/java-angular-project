@@ -1,54 +1,56 @@
 <div class="form-container">
 
-  <div *ngIf="!isLoggedIn">
-    <h2>התחברות לאתר 🔑</h2>
+    <div *ngIf="!isLoggedIn">
+        <h2>התחברות לאתר 🔑</h2>
+        
+        <form #loginForm="ngForm" (ngSubmit)="signin()">
+            
+            <div class="form-row">
+                <label for="username">שם משתמש:</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username"
+                        [(ngModel)]="user.username"
+                        required
+                        #usernameInput="ngModel">
+                        
+                    <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)">
+                        <small *ngIf="usernameInput.errors?.['required']">שדה חובה.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="password">סיסמה:</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password"
+                        [(ngModel)]="user.password"
+                        required
+                        #passwordInput="ngModel">
+                        
+                    <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
+                        <small *ngIf="passwordInput.errors?.['required']">שדה חובה.</small>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" [disabled]="!loginForm.form.valid">התחבר</button>
+        </form>
+    </div>
     
-    <form #loginForm="ngForm" (ngSubmit)="signin()">
-      
-      <div class="form-row">
-        <label for="username">שם משתמש:</label>
-        <div class="input-wrapper">
-          <input 
-            type="text" 
-            id="username" 
-            name="username"
-            [(ngModel)]="user.username"
-            required
-            #usernameInput="ngModel">
-            
-          <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)">
-            <small *ngIf="usernameInput.errors?.['required']">שדה חובה.</small>
-          </div>
-        </div>
-      </div>
+    <div *ngIf="message" class="message">
+        {{ message }}
+    </div>
 
-      <div class="form-row">
-        <label for="password">סיסמה:</label>
-        <div class="input-wrapper">
-          <input 
-            type="password" 
-            id="password" 
-            name="password"
-            [(ngModel)]="user.password"
-            required
-            #passwordInput="ngModel">
-            
-          <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
-            <small *ngIf="passwordInput.errors?.['required']">שדה חובה.</small>
-          </div>
-        </div>
-      </div>
+    <div class="success-state" *ngIf="isLoggedIn && currentUsername && !message.startsWith('התחברת בהצלחה!')">
+        <h3>🎉 ברוך הבא לאתר!</h3>
+        <p>הנך כבר מחובר, שלום {{ currentUsername }}</p> 
+        <p>אנו שמחים לראותך שוב.</p>
+    </div>
 
-      <button type="submit" [disabled]="!loginForm.form.valid">התחבר</button>
-    </form>
-  </div>
-
-  <div *ngIf="message" class="message">
-    {{ message }}
-  </div>
-
-  <div class="success-state" *ngIf="isLoggedIn && !message.startsWith('התחברת בהצלחה!')">
-    <h3>🎉 ברוך הבא לאתר!</h3>
-    <p>אנו שמחים לראותך שוב.</p>
-  </div>
 </div>

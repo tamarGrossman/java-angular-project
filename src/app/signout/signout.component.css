@@ -1,0 +1,94 @@
+/* signout.component.css */
+
+.signout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e2e8f0 100%);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* כפתור התנתקות */
+button.btn.btn-danger {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0.9rem 2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(255, 65, 108, 0.4);
+  transition: all 0.25s ease-in-out;
+}
+
+button.btn.btn-danger:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(255, 65, 108, 0.5);
+}
+
+button.btn.btn-danger:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(255, 65, 108, 0.3);
+}
+
+/* הודעת מצב */
+.message-status {
+  margin-top: 1.5rem;
+  font-size: 1.05rem;
+  padding: 1rem 1.4rem;
+  border-radius: 12px;
+  text-align: center;
+  background: #ffffff;
+  color: #444;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* מצבי הצלחה ושגיאה */
+.message-status.success {
+  background: #e6ffed;
+  color: #1b5e20;
+  border: 1px solid #81c784;
+}
+
+.message-status.error {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+/* אפקט הופעה */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* התאמה למסכים קטנים */
+@media (max-width: 600px) {
+  .signout-container {
+    padding: 2rem 1rem;
+    border-radius: 16px;
+  }
+
+  button.btn.btn-danger {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .message-status {
+    font-size: 0.95rem;
+  }
+}

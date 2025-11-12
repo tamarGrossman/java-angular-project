@@ -9,9 +9,15 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class usersService {
-   private _isLoggedIn = new BehaviorSubject<boolean>(false); // <-- כאן
+private _isLoggedIn = new BehaviorSubject<boolean>(false);
   public isLoggedIn$ = this._isLoggedIn.asObservable(); // אובזרבלא למעקב בקומפוננטות
+  private _currentUser = new BehaviorSubject<string>(''); // 💡💡💡 שינוי קריטי 1: הוספת משתנה גלובלי לשם משתמש
+   public currentUser$ = this._currentUser.asObservable();  // 💡💡💡
   message: string | undefined;
+  public forceSignOutLocal() {
+    this._isLoggedIn.next(false);
+    this._currentUser.next(''); // 💡 ניקוי שם המשתמש בהתנתקות כפויה
+  }
     constructor(private http:HttpClient,private router: Router) {}
   private baseUrl='http://localhost:8080/api/users';
 
@@ -39,39 +45,7 @@ signup(user: Users): Observable<string> {
         { ...httpOptions, responseType: 'text' as 'json' } 
     ) as Observable<string>; 
 }
-
-
-
-  // signup(user: Users): Observable<Users> {
-  //   return this.http.post<Users>(`${this.baseUrl}/signup`, user, { withCredentials: true });
-  // }
- /* signin(user: Users): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(`${this.baseUrl}/signin`, user, {
-      headers: headers,
-      withCredentials: true // חשוב! כדי שיישלח ה-cookie מהשרת
-    });
-  }*/
-/*signin(username: string, password: string) {
-  return this.http.post(`${this.baseUrl}/signin`, { username, password }, { 
-    withCredentials: true, 
-    responseType: 'text' 
-  }).pipe(
-    tap({
-      next: (res: string) => {
-        this._isLoggedIn.next(true);
-        this.message = `התחברת בהצלחה! שלום ${username}`;
-      },
-      error: (err: any) => {
-        this._isLoggedIn.next(false);
-        // אם השרת מחזיר טקסט במקום JSON
-        const text = err.error ? err.error : 'שגיאה לא צפויה';
-        this.message = text;
-      }
-    })
-  );
-}*/
-/**
+/*
    * פונקציית התחברות תואמת לקוד ה-Java
    * @param user - אובייקט Users המכיל username ו-password
    */
@@ -96,13 +70,43 @@ signin(user: Users): Observable<string> {
 
     // ביצוע קריאת ה-POST
     // ***שינוי קריטי 2: ציון הטיפוס <string> במפורש ב-post***
-    return this.http.post<string>( 
+  return this.http.post<string>( 
         `${this.baseUrl}/signin`,
         signinData,
-        // ה-HttpClient מקבל את כל ה-options כ-object אחד
-        { ...httpOptions, responseType: 'text' as 'json' } // <--- תיקון סופי לשגיאת ה-ArrayBuffer
-    );
-}
+        { ...httpOptions, responseType: 'text' as 'json' }
+    ).pipe(
+        tap((response: string) => {
+            this._isLoggedIn.next(true); 
+            
+            // 💡💡💡 שינוי קריטי 2: שמירת שם המשתמש הגלובלי 💡💡💡
+            // אנו מניחים שהשרת מחזיר את שם המשתמש עצמו (אם ההתחברות הצליחה)
+            // או שהוא מחזיר מחרוזת מורכבת שצריך לנתח. נניח שהוא מחזיר את השם.
+            const username = response.startsWith("אתה כבר מחובר כ-") 
+                             ? response.replace("אתה כבר מחובר כ-", "").trim() 
+                             : response.trim();
+            this._currentUser.next(username); 
+        })
+    ); 
 }
 
 
+signout(): Observable<string> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({ 'ContentType': 'application/json' }),
+      withCredentials: true 
+    };
+
+    return this.http.post<string>( 
+      `${this.baseUrl}/signout`,
+      null, 
+      { ...httpOptions, responseType: 'text' as 'json' } 
+   ).pipe(
+        tap((message: string) => { 
+            this._isLoggedIn.next(false); 
+            this._currentUser.next(''); // 💡💡💡 שינוי קריטי 3: ניקוי שם המשתמש
+            console.log('Signout successful:', message);
+        })
+    ); 
+}
+  }
