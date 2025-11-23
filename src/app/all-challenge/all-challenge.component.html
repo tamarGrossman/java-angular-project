@@ -1,25 +1,25 @@
 <div class="all-challenges-container">
   <h2>כל האתגרים</h2>
+  
+  @if (challengeList.length === 0) {
+    <div class="no-challenges-message">
+      עדיין אין אתגרים להצגה.
+    </div>
+  }
 
-  <div *ngIf="challengeList.length === 0">
-    עדיין אין אתגרים להצגה.
-  </div>
-
-  <ul *ngIf="challengeList.length > 0" class="challenge-list">
-    <li *ngFor="let challenge of challengeList" class="challenge-item">
-      
-      <img 
-        [src]="getImageSource(challenge.picture)" 
-        alt="תמונה לאתגר {{ challenge.name }}"
-        class="challenge-image"
-        
-        onerror="this.onerror=null; this.src='assets/default-challenge.png';"
-      />
-      <h3>{{ challenge.picture }}</h3>
-      <h3>{{ challenge.name }}</h3>
-      <p>{{ challenge.description }}</p>
-      <p><strong>תאריך העלאה :</strong> {{ challenge.date }}</p>
-      <p><strong>משך האתגר :</strong> {{ challenge.numOfDays }}</p>
-    </li>
-  </ul>
+  @if (challengeList.length > 0) {
+    <ul class="challenge-list">
+      @for (challenge of challengeList; track challenge.id) {
+        <li class="challenge-item">
+          
+          <a [routerLink]="['/challenge', challenge.id]" class="challenge-title-link">
+            <h3>{{ challenge.name }}</h3>
+          </a>
+          
+          <p><strong>נוצר על ידי :</strong> {{ challenge.userName }}</p>
+          
+        </li>
+      } 
+      </ul>
+  }
 </div>

@@ -14,6 +14,9 @@ export class ChallengeService {
     getAllChallenges():Observable<Challenge[]>{
       return this.http.get<Challenge[]>(`${this.baseUrl}/getAll`);
     }
+    getChallengeById(id: number): Observable<Challenge> {
+      return this.http.get<Challenge>(`${this.baseUrl}/getById${id}`);
+    }
     
     /**
      * 💡 פונקציה מעודכנת לשליחת נתונים בפורמט FormData
@@ -39,4 +42,15 @@ export class ChallengeService {
       return this.http.post<Challenge>(`${this.baseUrl}/create`, formData,{withCredentials: true})
       ;
     }
+  joinChallenge(challengeId: number): Observable<any> {
+    // ⬅️ הוספנו { responseType: 'text' } כדי לצפות למחרוזת
+    return this.http.post(`${this.baseUrl}/join/${challengeId}`, null, {
+        withCredentials: true,
+        responseType: 'text' // <--- התיקון הקריטי
+    });
+}
+  
+  getUserChallenges(userId: number): Observable<Challenge[]> {
+    return this.http.get<Challenge[]>(`${this.baseUrl}/userChallenges/${userId}`);
+  }
   }
