@@ -7,6 +7,7 @@ import { SigninComponent } from './signin/signin.component';
 import { SignoutComponent } from './signout/signout.component';
 import { NavComponent } from './nav/nav.component';
 import { ChallengeDetailsComponent } from './challenge-details/challenge-details.component';
+import { AddCommentComponent } from './add-comment/add-comment.component';
 
 export const routes: Routes = [
 {path:'',component:HomeComponent},
@@ -16,4 +17,5 @@ export const routes: Routes = [
 {path:'signin',component:SigninComponent},
 {path:'signout',component:SignoutComponent},
 {path:'nav',component:NavComponent},
-{path:'challenge/:id',component:ChallengeDetailsComponent}];
+{path:'challenge/:id',component:ChallengeDetailsComponent},
+{path:'addComment',component:AddCommentComponent}];

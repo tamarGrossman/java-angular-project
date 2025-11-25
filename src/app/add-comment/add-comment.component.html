@@ -1,0 +1,27 @@
+<div class="comment-form-container">
+    <h4>הוספת תגובה</h4>
+
+    <textarea
+        [(ngModel)]="commentContent"
+        rows="4"
+        placeholder="כתוב את התגובה שלך כאן..."
+        [disabled]="isLoading"
+    ></textarea>
+
+    <button 
+        (click)="submitComment()" 
+        [disabled]="isLoading || !commentContent.trim()"
+    >
+        @if (isLoading) {
+            שולח...
+        } @else {
+            שלח תגובה
+        }
+    </button>
+
+    @if (message) {
+        <p [class]="isError ? 'error-message' : 'success-message'">
+            {{ message }}
+        </p>
+    }
+</div>

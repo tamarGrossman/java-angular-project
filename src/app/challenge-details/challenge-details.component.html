@@ -1,58 +1,83 @@
 <div class="challenge-details-container">
-  
-  @if (isLoading) {
-    <div class="loading-message">
-      <p>טוען פרטי אתגר... אנא המתן.</p>
-    </div>
-  }
+  
+  @if (isLoading) {
+    <div class="loading-message">
+      <p>טוען פרטי אתגר... אנא המתן.</p>
+    </div>
+  }
 
-  @if (challenge) {
-    <div class="challenge-card">
-      
-      <header class="card-header">
-        <h1 class="challenge-name">{{ challenge?.name }}</h1>
-      </header>
+  @if (challenge) {
+    <div class="challenge-card">
+      
+      <header class="card-header">
+        <h1 class="challenge-name">{{ challenge?.name }}</h1>
+      </header>
 
-      <div class="card-body">
-        
-        @if (challenge.picture) {
-          <div class="image-container">
-            <img 
-              [src]="'data:image/jpeg;base64,' + challenge.picture" 
-              [alt]="'תמונת אתגר: ' + challenge.name" 
-              class="challenge-image"
-            />
-          </div>
-        }
-        
-        <p class="description-title">תיאור האתגר:</p>
-        <p class="challenge-description">{{ challenge.description }}</p>
-        
-        <hr>
+      <div class="card-body">
+        
+        @if (challenge.picture) {
+          <div class="image-container">
+            <img 
+              [src]="'data:image/jpeg;base64,' + challenge.picture" 
+              [alt]="'תמונת אתגר: ' + challenge.name" 
+              class="challenge-image"
+            />
+          </div>
+        }
+        
+        <p class="description-title">תיאור האתגר:</p>
+        <p class="challenge-description">{{ challenge.description }}</p>
+        
+        <hr>
 
-        <div class="challenge-meta">
-          <p><strong>מזהה:</strong> {{ challenge.id }}</p>
-          <p><strong>משך זמן:</strong> {{ challenge.numOfDays }} ימים</p>
-          <p><strong>תאריך יצירה:</strong> {{ challenge.date | date: 'dd/MM/yyyy' }}</p>
-          <p><strong>נוצר על ידי:</strong> {{ challenge.userName }}</p>
-          
-          <button [routerLink]="['/challenges']" class="back-button">חזרה לרשימת האתגרים</button>
+        <div class="challenge-meta">
+          <p><strong>מזהה:</strong> {{ challenge.id }}</p>
+          <p><strong>משך זמן:</strong> {{ challenge.numOfDays }} ימים</p>
+          <p><strong>תאריך יצירה:</strong> {{ challenge.date | date: 'dd/MM/yyyy' }}</p>
+          <p><strong>נוצר על ידי:</strong> {{ challenge.userName }}</p>
+          
+          <button [routerLink]="['/challenges']" class="back-button">חזרה לרשימת האתגרים</button>
+
+        </div>
+
+        <div class="comment-actions-group">
+            <button (click)="toggleCommentForm()" class="btn btn-secondary toggle-button">
+                @if (showCommentForm) {
+                    הסתר טופס תגובה
+                } @else {
+                    הוסף תגובה (במקום) ✏️
+                }
+            </button>
+            
+            <button 
+                [routerLink]="['/add-comment', challenge.id]" 
+                class="btn btn-info navigate-button">
+                ניווט לעמוד תגובה חדש
+            </button>
         </div>
-
-      </div>
+              </div>
+    </div>
+ @if (showCommentForm) {
+    <div class="add-comment-section">
+        <app-add-comment 
+            [challengeId]="challenge.id"  
+            (commentAdded)="onCommentAddedSuccess()">
+        </app-add-comment>
     </div>
-  } @else if (!isLoading) { 
-    <div class="error-message">
-      <h2>404 - האתגר לא נמצא</h2>
-      <p>מצטערים, לא הצלחנו למצוא את האתגר עם מזהה {{ challengeId }}.</p>
-    </div>
-    
-  }
-  <button 
-    (click)="joinChallenge()" 
-    [disabled]="isJoining" 
-    class="btn btn-primary join-button">
-    {{ isJoining ? 'מצטרף...' : 'הצטרף לאתגר' }}
-</button>
+}
+      } @else if (!isLoading) { 
+    <div class="error-message">
+      <h2>404 - האתגר לא נמצא</h2>
+      <p>מצטערים, לא הצלחנו למצוא את האתגר עם מזהה {{ challengeId }}.</p>
+    </div>
+    
+  }
+  
+    <button 
+    (click)="joinChallenge()" 
+    [disabled]="isJoining" 
+    class="btn btn-primary join-button">
+    {{ isJoining ? 'מצטרף...' : 'הצטרף לאתגר' }}
+  </button>
 
 </div>
