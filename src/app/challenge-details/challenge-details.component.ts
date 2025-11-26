@@ -5,6 +5,7 @@ import { Challenge } from '../models/challenge.model';
 import { ChallengeService } from '../service/challenge.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+
 // ⬅️ ייבוא קומפוננטת התגובה החדשה
 import { AddCommentComponent } from '../add-comment/add-comment.component'; 
 // ייבוא הנדרש עבור routerLink אם לא מיובא דרך RouterModule
@@ -26,6 +27,7 @@ export class ChallengeDetailsComponent implements OnInit {
 
   // ⬅️ משתנה חדש לשליטה בהצגת הטופס
   showCommentForm: boolean = true; 
+  refreshTrigger: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,14 +67,56 @@ export class ChallengeDetailsComponent implements OnInit {
   }
 
   // ⬅️ פונקציה חדשה: מטפלת בהצלחת שליחת תגובה
-  onCommentAddedSuccess(): void {
-    this.showCommentForm = false; // מסתיר את הטופס לאחר שליחה
-    // 💡 יש להוסיף קריאה לפונקציה שתטען מחדש את רשימת התגובות
-    // לדוגמה: this.loadComments(); 
-    console.log('תגובה נוספה בהצלחה, מרענן את הרשימה (אם הלוגיקה קיימת).');
-  }
+  // ✅ תיקון 3: שינוי הלוגיקה ב-onCommentAddedSuccess()
+  onCommentAddedSuccess(): void {
+    
+    // 1. הגדלת הטריגר באופן מיידי - זה מרענן את רשימת התגובות
+    this.refreshTrigger++;
+    console.log(`9. [DETAILS] Comment added success received. Triggering refresh... Trigger: ${this.refreshTrigger}`);
+    
+    // 2. עטיפת הסתרת הטופס ב-setTimeout.
+    // זה מאפשר ל-AddCommentComponent להציג את הודעת ההצלחה שלו ל-3 שניות
+    // לפני שהרכיב (וההודעה) נמחק מהמסך.
+    setTimeout(() => {
+        this.showCommentForm = false; // הסתרת הטופס לאחר 3 שניות
+        console.log('10. [DETAILS] Hiding comment form after 3 seconds.');
+    }, 3000); 
+    
+    console.log('תגובה נוספה בהצלחה, מרענן את הרשימה (אם הלוגיקה קיימת).');
+  }
 
-  joinChallenge(): void {
-    // ... לוגיקת הצטרפות קיימת ...
+  // --- הפונקציה החדשה: הצטרפות לאתגר ---
+  joinChallenge(): void {
+    if (this.isJoining || !this.challengeId) {
+      return; // ⬅️ מונע לחיצות כפולות
+    }
+
+    this.isJoining = true;
+
+    // הפונקציה בסרוויס משתמשת כבר ב-{withCredentials: true}
+    // וה-Backend מחלץ את ה-User ID מה-Cookie/Token המאומת.
+    this.challengeService.joinChallenge(this.challengeId).subscribe({
+      next: (response) => {
+        alert('הצטרפת לאתגר בהצלחה!');
+        console.log('Join Success:', response);
+        this.isJoining = false;
+        // 💡 ניווט לרשימת האתגרים שלי או רענון הדף
+        this.router.navigate(['/my-challenges']); 
+      },
+      error: (err) => {
+        this.isJoining = false;
+        const errorMessage = err.error || 'שגיאה בהצטרפות. אנא ודא שאתה מחובר.';
+
+        // טיפול בשגיאות נפוצות:
+        if (err.status === 400 && errorMessage.includes('כבר הצטרף')) {
+          alert('אתה כבר רשום לאתגר זה.');
+        } else if (err.status === 401 || err.status === 403) {
+           alert('עליך להתחבר כדי להצטרף לאתגר.');
+        } else {
+          alert(`שגיאה בהצטרפות: ${errorMessage}`);
+        }
+        console.error('Join Error:', err);
+      }
+    });
   }
 }

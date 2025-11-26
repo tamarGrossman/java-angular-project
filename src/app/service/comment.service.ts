@@ -1,9 +1,8 @@
-// src/app/services/challenge.service.ts
-
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Comment } from '../models/comment.model';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
+// ⬅️ ודאי ש-Comment מוגדר נכון או שהשתמשי ב-any אם לא מוגדר
+import { Comment } from '../models/comment.model'; 
 
 @Injectable({
   providedIn: 'root'
@@ -19,20 +18,16 @@ export class CommentService {
    * שולח בקשת POST להוספת תגובה לאתגר ספציפי.
    *
    * @param challengeId ה-ID של האתגר אליו מוסיפים תגובה.
-   * @param commentDto אובייקט CommentDto המכיל את התוכן והתמונה.
-   * @returns Observable שמחזיר את תגובת השרת (הודעת הצלחה/שגיאה).
+   * @param commentDto אובייקט CommentDto המכיל את התוכן.
+   * @returns Observable<any> (מכיוון שה-Backend מחזיר 201 ריק)
    */
-  addCommentToChallenge(challengeId: number, comment: Comment): Observable<any> {
-    // הנתיב המלא: /api/comment/{challengeId}
-    const url = `${this.baseUrl}/add/${challengeId}`;
+// 💡 שינוי החתימה לקבלת FormData
+  addCommentToChallenge(challengeId: number, formData: FormData): Observable<any> {
+    // הנתיב המלא: /api/comment/add/{challengeId}
+    const url = `${this.baseUrl}/add/${challengeId}`;
 
-    // ה-Interceptor (אם מוגדר) יטפל אוטומטית בהוספת ה-Authorization Token
-    // אם אין Interceptor, תצטרכי להוסיף את ה-Token באופן ידני כאן,
-    // אך השימוש ב-Interceptor הוא הדרך המקובלת והטובה ביותר.
-
-    // ה-HttpClient שולח את ה-commentDto כ-JSON בגוף הבקשה
-    return this.http.post(url, comment,{withCredentials: true, responseType: 'text' }
-);
-  }
-
+    // ✅ שליחה ישירה של ה-FormData. הדפדפן מגדיר אוטומטית את Content-Type
+    // 💡 הערה: אם ה-Backend מחזיר 201 ריק, אנו מטפלים בזה ב-Component.
+    return this.http.post(url, formData, { withCredentials: true }); 
+  }
 }
