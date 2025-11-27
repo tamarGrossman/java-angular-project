@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { AddCommentComponent } from '../add-comment/add-comment.component'; 
 // ייבוא הנדרש עבור routerLink אם לא מיובא דרך RouterModule
 import { RouterLink } from '@angular/router'; 
+import { CommentService } from '../service/comment.service';
+import { Comment } from '../models/comment.model';
 
 @Component({
   selector: 'app-challenge-details',
@@ -24,28 +26,38 @@ export class ChallengeDetailsComponent implements OnInit {
   challengeId: number = 0;
   isLoading: boolean = true;
   isJoining: boolean = false; 
+comments: Comment[] = [];
+  
 
   // ⬅️ משתנה חדש לשליטה בהצגת הטופס
   showCommentForm: boolean = true; 
   refreshTrigger: number = 0;
 
   constructor(
+    private commentService: CommentService,  
     private route: ActivatedRoute,
     private challengeService: ChallengeService,
     private router: Router
   ) { }
+ngOnInit(): void {
+    
+    // 1. קבלת ה-ID מתוך ה-URL (שימוש ב-subscribe לטיפול בשינויים עתידיים ב-URL)
+    this.route.params.subscribe(params => {
+      
+      const idParam = params['id'] || params['challengeId']; // בודק גם 'id' וגם 'challengeId'
 
-  ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-
-    if (idParam) {
-      this.challengeId = +idParam;
-      this.getChallengeDetails();
-    } else {
-      console.error('Challenge ID not found in URL');
-      this.isLoading = false;
-    }
-  }
+      if (idParam) {
+        this.challengeId = +idParam;
+        
+        // 2. קריאה לטעינת נתונים
+        this.getChallengeDetails();
+        this.loadComments(); // 💡 קריאה לטעינת תגובות ברגע שה-ID קיים
+      } else {
+        console.error('Challenge ID not found in URL');
+        this.isLoading = false;
+      }
+    });
+  } // סוף ngOnInit מאוחד
 
   getChallengeDetails(): void {
     this.challengeService.getChallengeById(this.challengeId).subscribe({
@@ -69,21 +81,22 @@ export class ChallengeDetailsComponent implements OnInit {
   // ⬅️ פונקציה חדשה: מטפלת בהצלחת שליחת תגובה
   // ✅ תיקון 3: שינוי הלוגיקה ב-onCommentAddedSuccess()
   onCommentAddedSuccess(): void {
-    
-    // 1. הגדלת הטריגר באופן מיידי - זה מרענן את רשימת התגובות
-    this.refreshTrigger++;
-    console.log(`9. [DETAILS] Comment added success received. Triggering refresh... Trigger: ${this.refreshTrigger}`);
     
-    // 2. עטיפת הסתרת הטופס ב-setTimeout.
-    // זה מאפשר ל-AddCommentComponent להציג את הודעת ההצלחה שלו ל-3 שניות
-    // לפני שהרכיב (וההודעה) נמחק מהמסך.
-    setTimeout(() => {
+    // ✅ 1. קריאה חוזרת לשרת:
+    // הפונקציה loadComments מביאה את כל רשימת התגובות המעודכנת (כולל החדשה)
+    // ומחליפה את המערך this.comments.
+    this.loadComments(); 
+    
+    console.log(`תגובה נוספה בהצלחה. מרענן את רשימת התגובות...`);
+    
+    // 2. עטיפת הסתרת הטופס ב-setTimeout (נשאר לטובת חווית משתמש טובה)
+    setTimeout(() => {
         this.showCommentForm = false; // הסתרת הטופס לאחר 3 שניות
-        console.log('10. [DETAILS] Hiding comment form after 3 seconds.');
+        console.log('מסתיר את טופס התגובה לאחר 3 שניות.');
     }, 3000); 
     
-    console.log('תגובה נוספה בהצלחה, מרענן את הרשימה (אם הלוגיקה קיימת).');
-  }
+    // ניתן להסיר את this.refreshTrigger++ ו-console.log הקשורים לטריגר אם את כבר לא משתמשת בו.
+}
 
   // --- הפונקציה החדשה: הצטרפות לאתגר ---
   joinChallenge(): void {
@@ -119,4 +132,20 @@ export class ChallengeDetailsComponent implements OnInit {
       }
     });
   }
+
+  loadComments(): void {
+    // קורא לשירות ושומר את התגובות במשתנה 'comments'
+    this.commentService.getCommentsByChallengeId(this.challengeId)
+      .subscribe({
+        next: (data) => {
+          this.comments = data;
+          console.log('Comments loaded:', data);
+        },
+        error: (e) => {
+          console.error('Error fetching comments:', e);
+          // ניתן להציג כאן הודעה למשתמש
+        }
+      });
+  }
 }
+

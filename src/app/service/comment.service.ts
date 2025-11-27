@@ -30,4 +30,11 @@ export class CommentService {
     // 💡 הערה: אם ה-Backend מחזיר 201 ריק, אנו מטפלים בזה ב-Component.
     return this.http.post(url, formData, { withCredentials: true }); 
   }
+
+getCommentsByChallengeId(challengeId: number): Observable<Comment[]> {
+    const url = `${this.baseUrl}/getByChallenge/${challengeId}`;
+    
+    // שליחת בקשת GET לשרת וציפייה למערך של אובייקטי Comment
+    return this.http.get<Comment[]>(url);
+  }
 }

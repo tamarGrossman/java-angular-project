@@ -1,0 +1,33 @@
+@if (isVisible) {
+    <div class="chat-popup-container" dir="rtl">
+        <div class="chat-header">
+            <h3>💬 AI כושר ותזונה</h3>
+            <button class="close-btn" (click)="onClose()">X</button>
+        </div>
+        
+        <div class="chat-messages">
+            @for (msg of messages; track $index) {
+                <div [class]="msg.isUser ? 'message user-message' : 'message bot-message'">
+                    {{ msg.content }}
+                </div>
+            }
+            @if (isLoading) {
+                <div class="message bot-message loading-message">
+                    ... הבוט חושב ...
+                </div>
+            }
+        </div>
+        
+        <div class="chat-input">
+            <input 
+                [(ngModel)]="currentMessage" 
+                (keyup.enter)="sendMessage()" 
+                placeholder="שאל שאלה על כושר, בריאות או תזונה..."
+                [disabled]="isLoading"
+            />
+            <button (click)="sendMessage()" [disabled]="isLoading || !currentMessage.trim()">
+                שלח
+            </button>
+        </div>
+    </div>
+}

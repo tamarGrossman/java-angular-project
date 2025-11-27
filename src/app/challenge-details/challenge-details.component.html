@@ -40,44 +40,76 @@
 
         </div>
 
-        <div class="comment-actions-group">
-            <button (click)="toggleCommentForm()" class="btn btn-secondary toggle-button">
-                @if (showCommentForm) {
-                    הסתר טופס תגובה
-                } @else {
-                    הוסף תגובה (במקום) ✏️
-                }
-            </button>
-            
-            <button 
-                [routerLink]="['/add-comment', challenge.id]" 
-                class="btn btn-info navigate-button">
-                ניווט לעמוד תגובה חדש
-            </button>
-        </div>
-              </div>
+        <div class="comment-actions-group">
+            <button (click)="toggleCommentForm()" class="btn btn-secondary toggle-button">
+                @if (showCommentForm) {
+                    הסתר טופס תגובה
+                } @else {
+                    הוסף תגובה (במקום) ✏️
+                }
+            </button>
+            
+            <button 
+                [routerLink]="['/add-comment', challenge.id]" 
+                class="btn btn-info navigate-button">
+                ניווט לעמוד תגובה חדש
+            </button>
+        </div>
+              </div>
     </div>
- @if (showCommentForm) {
-    <div class="add-comment-section">
-        <app-add-comment 
-            [challengeId]="challenge.id"  
-            (commentAdded)="onCommentAddedSuccess()">
-        </app-add-comment>
-    </div>
+@if (showCommentForm) {
+    <div class="add-comment-section">
+        <app-add-comment 
+            [challengeId]="challenge.id"  
+            (commentAdded)="onCommentAddedSuccess()">
+        </app-add-comment>
+    </div>
 }
-      } @else if (!isLoading) { 
+    
+    <div class="comments-section">
+      <h3>💬 תגובות לאתגר ({{ comments.length }})</h3>
+
+      <hr>
+
+      @for (comment of comments; track comment.id) {
+        
+        <div class="comment-item">
+          <div class="comment-header">
+            <strong>{{ comment.username }}</strong>
+            
+            <span class="comment-date">פורסם ב: {{ comment.date | date: 'dd/MM/yyyy' }}</span>
+          </div>
+
+          <p class="comment-content">{{ comment.content }}</p>
+
+          @if (comment.picture) {
+            <div class="comment-image-container">
+              <img [src]="'data:image/jpeg;base64,' + comment.picture" 
+                   alt="תמונה שצורפה לתגובה" 
+                   class="comment-image">
+            </div>
+          }
+
+          <hr>
+        </div>
+
+      } @empty {
+        <p>אין עדיין תגובות לאתגר זה. היו הראשונים להגיב!</p>
+      }
+    </div>
+          } @else if (!isLoading) { 
     <div class="error-message">
       <h2>404 - האתגר לא נמצא</h2>
       <p>מצטערים, לא הצלחנו למצוא את האתגר עם מזהה {{ challengeId }}.</p>
     </div>
     
   }
-  
-    <button 
+  
+    <button 
     (click)="joinChallenge()" 
     [disabled]="isJoining" 
     class="btn btn-primary join-button">
     {{ isJoining ? 'מצטרף...' : 'הצטרף לאתגר' }}
-  </button>
+  </button>
 
 </div>

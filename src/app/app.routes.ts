@@ -8,7 +8,7 @@ import { SignoutComponent } from './signout/signout.component';
 import { NavComponent } from './nav/nav.component';
 import { ChallengeDetailsComponent } from './challenge-details/challenge-details.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
-
+import { ChatAIComponent } from './chat-ai/chat-ai.component';
 export const routes: Routes = [
 {path:'',component:HomeComponent},
 {path:'challenges',component:AllChallengeComponent },
@@ -18,4 +18,5 @@ export const routes: Routes = [
 {path:'signout',component:SignoutComponent},
 {path:'nav',component:NavComponent},
 {path:'challenge/:id',component:ChallengeDetailsComponent},
-{path:'addComment',component:AddCommentComponent}];
+{path:'addComment',component:AddCommentComponent},
+{path:'chatAI',component:ChatAIComponent}];

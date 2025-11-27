@@ -1,0 +1,25 @@
+/* מיקום הכפתור */
+.chat-toggle-button {
+    position: fixed; /* מקבע אותו למסך */
+    bottom: 20px; /* מרחק מהתחתית */
+    right: 20px; /* מרחק מהצד הימני */
+    z-index: 1000; /* ודא שהוא מעל רכיבים אחרים */
+    /* ניתן להוסיף עיצובים נוספים כמו גודל, צבע רקע וצל */
+    padding: 15px 20px;
+    border-radius: 50%; /* כפתור עגול */
+    border: none;
+    background-color: #3f51b5; /* כחול יפה */
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+}
+
+/* ודא שחלון הצ'אט עצמו מקבל גם הוא מיקום קבוע (אם לא עשית זאת ב-chat-ai.component.css) */
+app-chat-ai {
+    /* ההגדרות האלה צריכות להיות ב-chat-ai.component.css על המעטפת הפנימית */
+    position: fixed;
+    bottom: 90px; /* מעל הכפתור */
+    right: 20px;
+    z-index: 999;
+}

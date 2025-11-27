@@ -1,2 +1,11 @@
 <app-nav></app-nav>
 <router-outlet></router-outlet>
+
+<app-chat-ai 
+  [isVisible]="isChatOpen" 
+  (closeChat)="closeChatWindow()">
+</app-chat-ai>
+
+<button class="chat-toggle-button" (click)="toggleChat()">
+  צ'אט AI 🤖
+</button>
