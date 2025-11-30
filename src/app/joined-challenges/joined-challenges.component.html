@@ -1,0 +1,17 @@
+<div class="joined-challenges-container">
+    @if (!isLoading && !errorMessage && joinedChallenges.length > 0) {
+        <ul class="challenge-list simple-list">
+            @for (challenge of joinedChallenges; track challenge.id) {
+                
+                <li class="challenge-item row-display">
+                    
+                    <a [routerLink]="['/challenge', challenge.id]" class="challenge-link">
+                        <span class="challenge-name">{{ challenge.name }}</span>
+                    </a>
+                    
+                    </li>
+            } 
+        </ul>
+    }
+    
+</div>

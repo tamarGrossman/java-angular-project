@@ -1,0 +1,40 @@
+<div class="user-comments-container">
+    <h2>📝 התגובות שלי</h2>
+
+    @if (isLoading) {
+        <div class="loading-message">
+            <p>טוען תגובות, אנא המתן...</p>
+        </div>
+    }
+
+    @if (error) {
+        <div class="error-message">
+            <p><strong>שגיאה!</strong> {{ error }}</p>
+        </div>
+    }
+
+    @if (!isLoading && userComments.length > 0) {
+        <ul class="comments-list">
+            @for (comment of userComments; track comment.id) {
+                <li class="comment-item"
+                    (click)="navigateToChallengeDetails(comment.challengeId)"> 
+                    
+                    <div class="comment-content">
+                        <p>{{ comment.content }}</p>
+                    </div>
+                    
+                    <div class="comment-footer">
+                        <small>פורסם בתאריך: {{ comment.date | date: 'dd/MM/yyyy' }}</small>
+                        <span class="view-link">צפה בפרטי האתגר ⬅️</span>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+
+    @if (!isLoading && userComments.length === 0 && !error) {
+        <div class="no-content">
+            <p>לא נמצאו תגובות עבור משתמש זה.</p>
+        </div>
+    }
+</div>

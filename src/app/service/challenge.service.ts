@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Challenge } from '../models/challenge.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +50,29 @@ export class ChallengeService {
     });
 }
   
-  getUserChallenges(userId: number): Observable<Challenge[]> {
-    return this.http.get<Challenge[]>(`${this.baseUrl}/userChallenges/${userId}`);
+
+  getMyCreatedChallenges(): Observable<Challenge[]> {
+    
+    // חיוני: withCredentials: true כדי לשלוח את ה-Cookie/Session Token
+    const httpOptions = {
+        headers: new HttpHeaders({ 
+            'Content-Type': 'application/json' 
+        }),
+        withCredentials: true 
+    };
+    
+    const url = `${this.baseUrl}/uploadedBy`; // 👈 שימוש בנתיב החדש
+    
+    // ביצוע קריאת ה-GET. אנו מצפים לקבל רשימת ChallengeDto
+    return this.http.get<Challenge[]>(url, httpOptions);
+  }
+// קבלת אתגרים למשתמש שהצטרף אליהם
+getJoinedChallenges(): Observable<Challenge[]> {
+    const fullUrl = `${this.baseUrl}/joinedChallenges`;
+    
+    // 💡 הוספת withCredentials: true
+    return this.http.get<Challenge[]>(fullUrl, {
+      withCredentials: true 
+    });
   }
   }

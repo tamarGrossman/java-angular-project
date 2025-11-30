@@ -1,0 +1,29 @@
+<div class="profile-container">
+    <h2>👤 אזור הפרופיל שלי</h2>
+    
+    @if (isLoading) {
+       <div class="loading-message">טוען...</div>
+    } 
+    @else {
+        <p class="user-id-display">מזהה המשתמש הנוכחי: {{ currentUserId }}</p>
+
+        <div class="actions-grid">
+            
+            <a [routerLink]="['/created-challenges', currentUserId]" class="profile-button created-challenges">
+                <h3>🛠️ אתגרים שיצרתי</h3>
+                <p>צפה בכל האתגרים שפתחת.</p>
+            </a>
+            
+            <a [routerLink]="['/joined-challenges', currentUserId]" class="profile-button joined-challenges">
+                <h3>🤝 אתגרים שהשתתפתי בהם</h3>
+                <p>צפה בכל האתגרים שבהם לקחת חלק.</p>
+            </a>
+            
+            <a [routerLink]="['/user-comments', currentUserId]" class="profile-button user-comments">
+                <h3>💬 התגובות שלי</h3>
+                <p>עיין בכל התגובות שכתבת לאתגרים.</p>
+            </a>
+
+        </div>
+    }
+</div>

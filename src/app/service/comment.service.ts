@@ -37,4 +37,12 @@ getCommentsByChallengeId(challengeId: number): Observable<Comment[]> {
     // שליחת בקשת GET לשרת וציפייה למערך של אובייקטי Comment
     return this.http.get<Comment[]>(url);
   }
+  getUserComments(): Observable<Comment[]> {
+    // מכיוון שהאימות (ה-Cookie/Token) נשלח אוטומטית ע"י הדפדפן 
+    // כחלק מה-HttpClient, אין צורך להעביר פרמטר אימות נוסף כאן.
+    const url = `${this.baseUrl}/my-comments`;
+    
+    // אנו מצפים לקבל רשימה של CommentDto
+    return this.http.get<Comment[]>(url, { withCredentials: true } );
+  }
 }

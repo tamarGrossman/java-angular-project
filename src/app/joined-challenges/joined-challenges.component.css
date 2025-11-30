@@ -1,0 +1,101 @@
+/* ------------------------------------------- */
+/* 1. מיכל ראשי וכותרת */
+/* ------------------------------------------- */
+.joined-challenges-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    direction: rtl; /* יישור לימין לעברית */
+}
+
+.joined-challenges-container h3 {
+    text-align: center;
+    color: #007bff; /* כחול בהיר - צבע מותג של כושר */
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* ------------------------------------------- */
+/* 2. רשימת האתגרים (UL) */
+/* ------------------------------------------- */
+.challenge-list {
+    list-style: none; /* הסרת תבליטים */
+    padding: 0;
+    margin: 0;
+}
+
+/* ------------------------------------------- */
+/* 3. פריט אתגר בודד (LI) */
+/* ------------------------------------------- */
+.challenge-item {
+    display: flex;
+    justify-content: space-between; /* יישור שם הקישור לימין */
+    align-items: center;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-right: 5px solid #007bff; /* פס הדגשה צדדי */
+}
+
+/* אפקט ריחוף */
+.challenge-item:hover {
+    background-color: #f0f8ff; /* כחול בהיר מאוד בריחוף */
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ------------------------------------------- */
+/* 4. קישור לאתגר (A) */
+/* ------------------------------------------- */
+.challenge-link {
+    text-decoration: none; /* הסרת קו תחתון מקישור */
+    color: #333; /* צבע טקסט רגיל */
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    flex-grow: 1; /* מאפשר לקישור לתפוס את כל הרוחב הזמין */
+    text-align: right;
+    display: block; /* כדי להחיל padding/margin עליו */
+}
+
+/* אפקט ריחוף על שם האתגר */
+.challenge-link:hover .challenge-name {
+    color: #0056b3; /* צבע כחול כהה יותר בריחוף */
+    text-decoration: underline;
+}
+
+/* ------------------------------------------- */
+/* 5. הודעות סטטוס (טעינה/שגיאה/אין אתגרים) */
+/* ------------------------------------------- */
+.loading-message,
+.error-message,
+.no-challenges {
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.loading-message p {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.error-message {
+    background-color: #fff0f0;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.no-challenges {
+    background-color: #f4f4f4;
+    color: #666;
+    font-style: italic;
+}

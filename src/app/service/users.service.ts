@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Users } from '../models/users.model';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 
@@ -18,7 +18,9 @@ private _isLoggedIn = new BehaviorSubject<boolean>(false);
     this._isLoggedIn.next(false);
     this._currentUser.next(''); // 💡 ניקוי שם המשתמש בהתנתקות כפויה
   }
-    constructor(private http:HttpClient,private router: Router) {}
+    constructor(private http:HttpClient,private router: Router) {
+    this.checkAuthStatus();
+  }
   private baseUrl='http://localhost:8080/api/users';
 
 signup(user: Users): Observable<string> {
@@ -108,5 +110,41 @@ signout(): Observable<string> {
             console.log('Signout successful:', message);
         })
     ); 
+}
+checkAuthStatus(): void {
+    const httpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+        withCredentials: true 
+    };
+    
+    // אנו מצפים לקבל בחזרה רק boolean (true/false)
+    this.http.get<boolean>(`${this.baseUrl}/is-logged-in`, httpOptions).pipe(
+        // אם יש שגיאה (למשל, 401 Unauthorized), נניח שהמשתמש לא מחובר
+        catchError(error => {
+            console.warn('Authentication status check failed (Defaulting to false):', error);
+            // החזרת Observable של false
+            return of(false); 
+        }),
+        // מעדכן את ה-BehaviorSubject עם הסטטוס שהתקבל
+        tap(status => {
+            // הסטטוס המגיע (true/false) נכנס ל-BehaviorSubject
+            this._isLoggedIn.next(status);
+            
+            // אם הסטטוס הוא true (מחובר), צריך לשלוף את שם המשתמש.
+            // אם לא היית רוצה לשלוף את השם, היית יכולה להשתמש רק ב-this._isLoggedIn.next(status);
+            if (!status) {
+                this._currentUser.next('');
+            }
+        })
+    ).subscribe(); 
+    // שימו לב: חובה לבצע subscribe() כדי שהקריאה לשרת תצא לפועל.
+}
+
+// *** הוספה 2: מתודה לשליפת פרטי המשתמש המחובר (אם הוספת נקודת קצה כזו) ***
+// אם אין לך נקודת קצה שמחזירה את שם המשתמש הנוכחי, 
+// אנו נשתמש בפתרון פשוט יותר בינתיים:
+getCurrentUsername(): Observable<string> {
+    // זוהי רק דרך נוחה לגשת לשם המשתמש מבלי להתחבר ישירות ל-BehaviorSubject
+    return this.currentUser$;
 }
   }

@@ -9,6 +9,10 @@ import { NavComponent } from './nav/nav.component';
 import { ChallengeDetailsComponent } from './challenge-details/challenge-details.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
 import { ChatAIComponent } from './chat-ai/chat-ai.component';
+import { UserCommentsComponent } from './user-comments/user-comments.component';
+import { UploadedChallengesComponent } from './uploaded-challenges/uploaded-challenges.component';
+import { JoinedChallengesComponent } from './joined-challenges/joined-challenges.component';
+import { ProfileComponent } from './profile/profile.component';
 export const routes: Routes = [
 {path:'',component:HomeComponent},
 {path:'challenges',component:AllChallengeComponent },
@@ -19,4 +23,14 @@ export const routes: Routes = [
 {path:'nav',component:NavComponent},
 {path:'challenge/:id',component:ChallengeDetailsComponent},
 {path:'addComment',component:AddCommentComponent},
-{path:'chatAI',component:ChatAIComponent}];
+{path:'chatAI',component:ChatAIComponent},
+// ✅ 1. תיקון: שם אחיד לאתגרים שנוצרו (created-challenges) והפרמטר הוא userId
+    { path: 'created-challenges/:userId', component: UploadedChallengesComponent },
+
+    // ✅ 2. תיקון: שם אחיד לאתגרים שהצטרפו (joined-challenges) והפרמטר הוא userId
+    { path: 'joined-challenges/:userId', component: JoinedChallengesComponent },
+
+    // ✅ 3. תיקון: שם אחיד לתגובות (user-comments) והפרמטר הוא userId
+    { path: 'user-comments/:userId', component: UserCommentsComponent },
+{path:'profile',component:ProfileComponent}
+];

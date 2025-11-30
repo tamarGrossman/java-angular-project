@@ -52,6 +52,5 @@ message: string = '';
         this.message = 'אירעה שגיאה בעת ההתנתקות. נסה שוב.';
         
         // 💡💡💡 השתמש במתודה הציבורית החדשה 💡💡💡
-        this.usersService.forceSignOutLocal(); 
     }});
 }}

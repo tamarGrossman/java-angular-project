@@ -1,13 +1,18 @@
-<!-- Navbar -->
 <nav class="navbar">
-  <div class="logo">אתגרי כושר ובריאות</div>
-  <div class="nav-links">
-    <a routerLink="">Home</a>
-    <a routerLink="challenges">All Challenges</a>
-    <a routerLink="createChallenge">העלאת אתגר</a>
-    <a routerLink="signin">signin</a>
-    <a routerLink="signout">signout</a>
-    <a routerLink="signup">signup</a>
-    <a routerLink="/profile">Profile</a>
-  </div>
+    <div class="logo">אתגרי כושר ובריאות</div>
+    <div class="nav-links">
+        <a routerLink="">Home</a>
+        <a routerLink="challenges">All Challenges</a>
+        <a routerLink="createChallenge">העלאת אתגר</a>
+        
+        @if (isLoggedIn$ | async) {
+            <a routerLink="profile">👤 Profile</a>
+            
+            <a routerLink="signout"> Signout</a> 
+            
+            } @else {
+            <a routerLink="signin"> Signin</a>
+            <a routerLink="signup"> Signup</a>
+        }
+    </div>
 </nav>
