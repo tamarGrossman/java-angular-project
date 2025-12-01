@@ -23,14 +23,17 @@ export class ChallengeService {
      * @param challengeData נתוני האתגר
      * @param imageFile קובץ התמונה (File)
      */
-    uploadChallenge(challengeData: Challenge, imageFile: File): Observable<Challenge>{
+    uploadChallenge(challengeData: Challenge, imageFile?: File | null): Observable<Challenge>{
       // 1. יצירת אובייקט FormData
       const formData = new FormData();
   
+      if (imageFile) {
+        // 2. הוספת קובץ התמונה תחת המפתח "image"
+        // אם imageFile אינו null, נוסיף אותו
+        formData.append('image', imageFile, imageFile.name);
+      }
       // 2. הוספת קובץ התמונה תחת המפתח "image"
-      // תואם ל- @RequestPart("image") ב-Java
-      formData.append('image', imageFile, imageFile.name);
-  
+      // תואם ל- @RequestPart("image") ב-Java  
       // 3. הוספת נתוני האתגר כאובייקט JSON תחת המפתח "challenge"
       // תואם ל- @RequestPart("challenge") ב-Java
       // ממירים את אובייקט ה-Challenge למחרוזת JSON באמצעות Blob

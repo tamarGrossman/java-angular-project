@@ -9,21 +9,21 @@
         [disabled]="isLoading"
     ></textarea>
 
-    <div class="file-input-group">
-        <label for="fileInput">בחר תמונה:</label>
-        <input 
-            type="file" 
-            id="fileInput" 
-            (change)="onFileSelected($event)" 
-            accept="image/*"
-            [disabled]="isLoading"
-        >
-    </div>
+    <div class="file-input-group">
+        <label for="fileInput">בחר תמונה:</label>
+        <input 
+            type="file" 
+            id="fileInput" 
+            (change)="onFileSelected($event)" 
+            accept="image/*"
+            [disabled]="isLoading"
+        >
+    </div>
 
     <button 
         (click)="submitComment()" 
-        [disabled]="isLoading || !commentContent.trim() || !selectedFile"     >
-        @if (isLoading) {
+        [disabled]="isLoading || !commentContent.trim()"     >
+                @if (isLoading) {
             שולח...
         } @else {
             שלח תגובה

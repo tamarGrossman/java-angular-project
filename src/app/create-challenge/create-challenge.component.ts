@@ -49,28 +49,27 @@ export class CreateChallengeComponent {
     this.errorMessage = null;
     this.successMessage = null;
 
-    if (!this.selectedFile) {
-      this.errorMessage = 'אנא בחר קובץ תמונה.';
-      return;
-    }
+ 
 
     this.uploading = true;
 
     // קורא לשירות עם נתוני האתגר והקובץ שנבחר
-    this.challengeService.uploadChallenge(this.newChallenge, this.selectedFile).subscribe({
-      next: (response) => {
-        this.successMessage = `האתגר "${response.name}" נוצר בהצלחה!`;
-        this.uploading = false;
-        // אפס טופס
-        this.newChallenge = {
-          name: '',
-          userName:'',
-          description: '',
-          date: new Date(),
-          numOfDays: 0,
-          userId: 1
-        };
-        this.selectedFile = null;
+   // ⭐ שינוי 2: קורא לשירות עם נתוני האתגר והקובץ (שיכול להיות null)
+    // ודא ששירות ה-uploadChallenge שלך תומך בקובץ שהוא null/undefined.
+    this.challengeService.uploadChallenge(this.newChallenge, this.selectedFile).subscribe({
+      next: (response) => {
+        this.successMessage = `האתגר "${response.name}" נוצר בהצלחה!`;
+        this.uploading = false;
+        // איפוס טופס
+        this.newChallenge = {
+          name: '',
+          userName:'',
+          description: '',
+          date: new Date(),
+          numOfDays: 0,
+          userId: 1 // החלף ב-ID המשתמש האמיתי
+        };
+        this.selectedFile = null;
         // איפוס הקלט של הקובץ ב-HTML אם צריך
       },
       error: (err) => {

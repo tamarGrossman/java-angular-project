@@ -62,13 +62,12 @@ handleSuccess(): void {
    */
   submitComment(): void {
     // ודאי שה-ID קיים, התוכן קיים וקובץ נבחר
-    if (!this.challengeId || !this.commentContent.trim() || !this.selectedFile) {
+    if (!this.challengeId || !this.commentContent.trim()) { 
       this.isError = true;
-      this.message = 'אנא מלאו תוכן תגובה ובחרו קובץ תמונה.';
-      console.log('4. [ADD_COMMENT] SUBMIT STARTED: Building FormData for Challenge ID:', this.challengeId);
+      this.message = 'אנא מלאו תוכן תגובה.'; // שינינו את הודעת השגיאה
+      console.log('4. [ADD_COMMENT] SUBMIT STARTED: Building FormData for Challenge ID:', this.challengeId);
       return;
     }
-  
     this.isLoading = true;
     this.isError = false;
     this.message = ''; 
@@ -86,9 +85,10 @@ handleSuccess(): void {
     // ✅ שימוש ב-Blob עם Content-Type: application/json פותר בעיות 415 רבות!
     const commentBlob = new Blob([JSON.stringify(commentDataDto)], { type: 'application/json' });
     formData.append('commentData', commentBlob); // ⬅️ KEY חייב להיות 'commentData'
-
-    // 4. הוספת הקובץ (חלק ה-"image")
-    formData.append('image', this.selectedFile, this.selectedFile.name); // ⬅️ KEY חייב להיות 'image'
+if (this.selectedFile) {
+      // 4. הוספת הקובץ (חלק ה-"image") - רק אם קיים!
+      formData.append('image', this.selectedFile, this.selectedFile.name); // ⬅️ KEY חייב להיות 'image'
+    }
     
     // ⬅️ המבנה התקין של הקריאה ל-subscribe
     this.commentService.addCommentToChallenge(this.challengeId, formData)
