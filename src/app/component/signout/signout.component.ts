@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { usersService } from '../service/users.service';
+import { usersService } from '../../service/users.service';
 import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-signout',

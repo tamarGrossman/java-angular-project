@@ -1,0 +1,27 @@
+<div class="like-container">
+  <span class="like-count">{{ likeCount }}</span>
+
+  <button 
+    (click)="onToggleLike()" 
+    [disabled]="isProcessing"
+    [ngClass]="{'liked': isLiked, 'not-liked': !isLiked}"
+  >
+    @if (isLiked) {
+      ❤️ (בטל לייק)
+    } @else {
+      🤍 (הוסף לייק)
+    }
+  </button>
+  
+@if (message) {
+    <div class="error-message">
+      {{ message }}
+    </div>
+}
+
+  @if (isProcessing) {
+    <div class="loading-indicator">
+      ...בטעינה
+    </div>
+  }
+</div>

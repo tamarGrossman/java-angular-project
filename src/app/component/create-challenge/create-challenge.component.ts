@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Challenge } from '../models/challenge.model';
-import { ChallengeService } from '../service/challenge.service';
+import { Challenge } from '../../models/challenge.model';
+import { ChallengeService } from '../../service/challenge.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -20,7 +20,10 @@ export class CreateChallengeComponent {
     description: '',
     date: new Date(), // ערך ברירת מחדל
     numOfDays: 0,
-    userId: 0 // **חשוב:** החלף ב-ID המשתמש האמיתי שצריך להגיע מהלוגין/אפליקציה
+    userId: 0,
+    likeCount: 0,
+    isLikedByCurrentUser: false
+   // **חשוב:** החלף ב-ID המשתמש האמיתי שצריך להגיע מהלוגין/אפליקציה
   };
   selectedFile: File | null = null;
   uploading = false;
@@ -67,7 +70,10 @@ export class CreateChallengeComponent {
           description: '',
           date: new Date(),
           numOfDays: 0,
-          userId: 1 // החלף ב-ID המשתמש האמיתי
+          userId: 1 ,
+          likeCount: 0,
+          isLikedByCurrentUser: false
+// החלף ב-ID המשתמש האמיתי
         };
         this.selectedFile = null;
         // איפוס הקלט של הקובץ ב-HTML אם צריך

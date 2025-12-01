@@ -8,4 +8,6 @@ export interface Challenge {
       numOfDays:number;//משך האתגר בימים
       picture?:string;
       imagePath?:string;
+      likeCount: number;         // מספר הלייקים הכולל
+      isLikedByCurrentUser: boolean;
     }

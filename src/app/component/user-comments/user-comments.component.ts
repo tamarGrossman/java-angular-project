@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, of, switchMap } from 'rxjs';
-import { CommentService } from '../service/comment.service';
-import { Comment } from '../models/comment.model';
+import { CommentService } from '../../service/comment.service';
+import { Comment } from '../../models/comment.model';
 import { DatePipe } from '@angular/common'; // 💡 ייבוא DatePipe
 
 

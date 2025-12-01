@@ -1,0 +1,88 @@
+<div class="challenge-form-container">
+    <h2>יצירת אתגר חדש 🎯</h2>
+
+    <form (ngSubmit)="onSubmit()" #challengeForm="ngForm">
+        
+        <div class="form-group">
+            <label for="name">שם האתגר:</label>
+            <input type="text" id="name" name="name" [(ngModel)]="newChallenge.name" 
+                   required
+                   minlength="2"
+                   maxlength="100">
+
+            @if (challengeForm.controls?.['name']?.invalid && (challengeForm.controls['name'].dirty || challengeForm.controls['name'].touched)) {
+                <div class="error-message">
+                    @if (challengeForm.controls['name']?.errors?.['required']) {
+                        <p>שם האתגר הוא שדה חובה.</p>
+                    }
+                    @if (challengeForm.controls['name']?.errors?.['minlength']) {
+                        <p>שם האתגר חייב להכיל לפחות 2 תווים.</p>
+                    }
+                    @if (challengeForm.controls['name']?.errors?.['maxlength']) {
+                        <p>שם האתגר יכול להכיל עד 100 תווים בלבד.</p>
+                    }
+                </div>
+            }
+        </div>
+        
+        <div class="form-group">
+            <label for="description">תיאור:</label>
+            <textarea id="description" name="description" [(ngModel)]="newChallenge.description" 
+                      required
+                     minlength="10"
+                      maxlength="700"></textarea>
+
+            @if (challengeForm.controls?.['description']?.invalid && (challengeForm.controls['description'].dirty || challengeForm.controls['description'].touched)) {
+                <div class="error-message">
+                    @if (challengeForm.controls['description']?.errors?.['required']) {
+                        <p>תיאור האתגר הוא שדה חובה.</p>
+                    }
+                    @if (challengeForm.controls['description']?.errors?.['minlength']) {
+                        <p>התיאור קצר מדי (מינימום 10 תווים).</p>
+                    }
+                    @if (challengeForm.controls['description']?.errors?.['maxlength']) {
+                        <p>התיאור ארוך מדי (מקסימום 700 תווים).</p>
+                    }
+                </div>
+            }
+        </div>
+        
+        <div class="form-group">
+            <label for="numOfDays">מספר ימים:</label>
+            <input type="number" id="numOfDays" name="numOfDays" [(ngModel)]="newChallenge.numOfDays" 
+                   required 
+                   min="1"
+                   max="365">
+
+            @if (challengeForm.controls?.['numOfDays']?.invalid && (challengeForm.controls['numOfDays'].dirty || challengeForm.controls['numOfDays'].touched)) {
+                <div class="error-message">
+                    @if (challengeForm.controls['numOfDays']?.errors?.['required']) {
+                        <p>מספר הימים הוא שדה חובה.</p>
+                    }
+                    @if (challengeForm.controls['numOfDays']?.errors?.['min']) {
+                        <p>מספר הימים המינימלי הוא 1.</p>
+                    }
+                    @if (challengeForm.controls['numOfDays']?.errors?.['max']) {
+                        <p>מספר הימים המקסימלי הוא 365.</p>
+                    }
+                </div>
+            }
+        </div>
+        
+        <div class="form-group">
+            <label for="file">בחר תמונה (אופציונלי):</label>
+            <input type="file" id="file" name="fileInput" (change)="onFileSelected($event)" accept="image/*">
+            </div>
+
+        <button type="submit" [disabled]="challengeForm.invalid || uploading">
+            {{ uploading ? 'מעלה...' : 'צור אתגר' }}
+        </button>
+
+        @if (successMessage) {
+            <p class="success">{{ successMessage }}</p>
+        }
+        @if (errorMessage) {
+            <p class="error">{{ errorMessage }}</p>
+        }
+    </form>
+</div>

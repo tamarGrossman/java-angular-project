@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { ChallengeService } from '../service/challenge.service';
+import { ChallengeService } from '../../service/challenge.service';
 import { Router } from '@angular/router';
-import { Challenge } from '../models/challenge.model';
+import { Challenge } from '../../models/challenge.model';
 import { RouterLink } from '@angular/router';
 
 @Component({

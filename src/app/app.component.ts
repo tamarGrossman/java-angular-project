@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavComponent } from './nav/nav.component';
+import { NavComponent } from './component/nav/nav.component';
 import { CommonModule } from '@angular/common';
-import { ChatAIComponent } from './chat-ai/chat-ai.component';
+import { ChatAIComponent } from './component/chat-ai/chat-ai.component';
 
 @Component({
   selector: 'app-root',

@@ -1,8 +1,8 @@
 // all-challenge.component.ts
 import { Component, OnInit } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { Challenge } from '../models/challenge.model';
-import { ChallengeService } from '../service/challenge.service';
+import { Challenge } from '../../models/challenge.model';
+import { ChallengeService } from '../../service/challenge.service';
 import { CommonModule} from '@angular/common'; 
 import { RouterModule } from '@angular/router';
 // אין צורך לייבא את OnInit שוב, הוא כבר שם

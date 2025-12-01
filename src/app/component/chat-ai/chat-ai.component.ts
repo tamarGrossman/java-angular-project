@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ChatResponse, ChatService } from '../service/chat.service';
+import { ChatResponse, ChatService } from '../../service/chat.service';
 import { FormsModule } from '@angular/forms';
-import {  Message } from '../models/chat.model';
+import {  Message } from '../../models/chat.model';
 @Component({
   selector: 'app-chat-ai',
   imports: [FormsModule],

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Users } from '../models/users.model';
-import { usersService } from '../service/users.service';
+import { Users } from '../../models/users.model';
+import { usersService } from '../../service/users.service';
 import { FormsModule } from '@angular/forms'; // ← זה חשוב
 import { CommonModule } from '@angular/common';
 

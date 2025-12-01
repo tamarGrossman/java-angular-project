@@ -25,6 +25,17 @@
           </div>
         }
         
+@if (challenge) {
+    <app-challenge-like
+                [challengeId]="challenge.id ?? 0"
+        
+                [initialIsLiked]="challenge.isLikedByCurrentUser" 
+        [initialLikeCount]="challenge.likeCount"
+        
+        (likeStatusChanged)="onLikeStatusUpdated($event)"
+    ></app-challenge-like>
+}
+                
         <p class="description-title">תיאור האתגר:</p>
         <p class="challenge-description">{{ challenge.description }}</p>
         
@@ -65,42 +76,42 @@
         </app-add-comment>
     </div>
 }
-    
-    <div class="comments-section">
-      <h3>💬 תגובות לאתגר ({{ comments.length }})</h3>
+    
+    <div class="comments-section">
+      <h3>💬 תגובות לאתגר ({{ comments.length }})</h3>
 
-      <hr>
+      <hr>
 
-      @for (comment of comments; track comment.id) {
-        
-        <div class="comment-item">
-          <div class="comment-header">
-            <strong>{{ comment.username }}</strong>
-            
-            <span class="comment-date">פורסם ב: {{ comment.date | date: 'dd/MM/yyyy' }}</span>
-          </div>
+      @for (comment of comments; track comment.id) {
+        
+        <div class="comment-item">
+          <div class="comment-header">
+            <strong>{{ comment.username }}</strong>
+            
+            <span class="comment-date">פורסם ב: {{ comment.date | date: 'dd/MM/yyyy' }}</span>
+          </div>
 
-          <p class="comment-content">{{ comment.content }}</p>
+          <p class="comment-content">{{ comment.content }}</p>
 
-          @if (comment.picture) {
-            <div class="comment-image-container">
-              <img [src]="'data:image/jpeg;base64,' + comment.picture" 
-                   alt="תמונה שצורפה לתגובה" 
-                   class="comment-image">
-            </div>
-          }
+          @if (comment.picture) {
+            <div class="comment-image-container">
+              <img [src]="'data:image/jpeg;base64,' + comment.picture" 
+                   alt="תמונה שצורפה לתגובה" 
+                   class="comment-image">
+            </div>
+          }
 
-          <hr>
-        </div>
+          <hr>
+        </div>
 
-      } @empty {
-        <p>אין עדיין תגובות לאתגר זה. היו הראשונים להגיב!</p>
-      }
-    </div>
-          } @else if (!isLoading) { 
+      } @empty {
+        <p>אין עדיין תגובות לאתגר זה. היו הראשונים להגיב!</p>
+      }
+    </div>
+          } @else if (!isLoading) { 
     <div class="error-message">
-      <h2>404 - האתגר לא נמצא</h2>
-      <p>מצטערים, לא הצלחנו למצוא את האתגר עם מזהה {{ challengeId }}.</p>
+        <h2>404 - האתגר לא נמצא</h2>
+        <p>מצטערים, לא הצלחנו למצוא את האתגר עם מזהה {{ challengeId }}.</p>
     </div>
     
   }

@@ -78,4 +78,11 @@ getJoinedChallenges(): Observable<Challenge[]> {
       withCredentials: true 
     });
   }
-  }
+addLikeChallenge(challengeId: number): Observable<any> { 
+    const url = `${this.baseUrl}/addLike/${challengeId}`; 
+    
+    return this.http.post(url, {}, { 
+        withCredentials: true,
+        responseType: 'text' // 👈 ודאי שזה קיים!
+    });
+}}

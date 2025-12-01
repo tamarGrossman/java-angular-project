@@ -1,8 +1,8 @@
 // signin.component.ts
 
 import { Component } from '@angular/core';
-import { usersService } from '../service/users.service';
-import { Users } from '../models/users.model';
+import { usersService } from '../../service/users.service';
+import { Users } from '../../models/users.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

@@ -1,18 +1,19 @@
 import { Routes } from '@angular/router';
-import { AllChallengeComponent } from './all-challenge/all-challenge.component';
-import { HomeComponent } from './home/home.component';
-import { CreateChallengeComponent } from './create-challenge/create-challenge.component';
-import { SignupComponent } from './signup/signup.component';
-import { SigninComponent } from './signin/signin.component';
-import { SignoutComponent } from './signout/signout.component';
-import { NavComponent } from './nav/nav.component';
-import { ChallengeDetailsComponent } from './challenge-details/challenge-details.component';
-import { AddCommentComponent } from './add-comment/add-comment.component';
-import { ChatAIComponent } from './chat-ai/chat-ai.component';
-import { UserCommentsComponent } from './user-comments/user-comments.component';
-import { UploadedChallengesComponent } from './uploaded-challenges/uploaded-challenges.component';
-import { JoinedChallengesComponent } from './joined-challenges/joined-challenges.component';
-import { ProfileComponent } from './profile/profile.component';
+import { AllChallengeComponent } from '../app/component/all-challenge/all-challenge.component';
+import { HomeComponent } from './component/home/home.component';
+import { CreateChallengeComponent } from './component/create-challenge/create-challenge.component';
+import { SignupComponent } from '../app/component/signup/signup.component';
+import { SigninComponent } from './component/signin/signin.component';
+import { SignoutComponent } from './component/signout/signout.component';
+import { NavComponent } from './component/nav/nav.component';
+import { ChallengeDetailsComponent } from './component/challenge-details/challenge-details.component';
+import { AddCommentComponent } from './component/add-comment/add-comment.component';
+import { ChatAIComponent } from './component/chat-ai/chat-ai.component';
+import { UserCommentsComponent } from './component/user-comments/user-comments.component';
+import { UploadedChallengesComponent } from './component/uploaded-challenges/uploaded-challenges.component';
+import { JoinedChallengesComponent } from './component/joined-challenges/joined-challenges.component';
+import { ProfileComponent } from './component/profile/profile.component';
+import { ChallengeLikeComponent } from './component/challenge-like/challenge-like.component';
 export const routes: Routes = [
 {path:'',component:HomeComponent},
 {path:'challenges',component:AllChallengeComponent },
@@ -24,13 +25,9 @@ export const routes: Routes = [
 {path:'challenge/:id',component:ChallengeDetailsComponent},
 {path:'addComment',component:AddCommentComponent},
 {path:'chatAI',component:ChatAIComponent},
-// ✅ 1. תיקון: שם אחיד לאתגרים שנוצרו (created-challenges) והפרמטר הוא userId
-    { path: 'created-challenges/:userId', component: UploadedChallengesComponent },
-
-    // ✅ 2. תיקון: שם אחיד לאתגרים שהצטרפו (joined-challenges) והפרמטר הוא userId
-    { path: 'joined-challenges/:userId', component: JoinedChallengesComponent },
-
-    // ✅ 3. תיקון: שם אחיד לתגובות (user-comments) והפרמטר הוא userId
-    { path: 'user-comments/:userId', component: UserCommentsComponent },
-{path:'profile',component:ProfileComponent}
+{ path: 'created-challenges/:userId', component: UploadedChallengesComponent },
+{ path: 'joined-challenges/:userId', component: JoinedChallengesComponent },
+{ path: 'user-comments/:userId', component: UserCommentsComponent },
+{path:'profile',component:ProfileComponent},
+{path:'like',component:ChallengeLikeComponent}
 ];

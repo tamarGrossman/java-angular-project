@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Users } from '../models/users.model'; // ✅ ודאי שהנתיב למודל נכון
+import { Users } from '../../models/users.model'; // ✅ ודאי שהנתיב למודל נכון
 
 @Component({
   selector: 'app-profile',

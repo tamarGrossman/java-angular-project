@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 // ⬅️ הוסף את HttpErrorResponse לטיפול בשגיאות
 import { HttpErrorResponse } from '@angular/common/http'; 
-import { CommentService } from '../service/comment.service';
+import { CommentService } from '../../service/comment.service';
 // ⬅️ ניתן להחליף את Comment ב-any אם המודל לא נחוץ כאן
-import { Comment } from '../models/comment.model'; 
+import { Comment } from '../../models/comment.model'; 
 import { FormsModule } from '@angular/forms';
 
 @Component({

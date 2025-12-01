@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router'; // 💡 ייבוא חובה ל-routerLink
 import { Observable } from 'rxjs';
-import { usersService } from '../service/users.service';
+import { usersService } from '../../service/users.service';
 import { AsyncPipe } from '@angular/common'; // 👈 1. הוספת הייבוא הזה
 
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Challenge } from '../models/challenge.model';
+import { Challenge } from '../../models/challenge.model';
 import { Observable } from 'rxjs';
-import { ChallengeService } from '../service/challenge.service';
+import { ChallengeService } from '../../service/challenge.service';
 import{ChallengeDetailsComponent} from '../challenge-details/challenge-details.component';
 import { AsyncPipe } from '@angular/common'; // 👈 חובה לייבא AsyncPipe
 import { RouterLink } from '@angular/router'; // 👈 חובה לייבא RouterLink אם אתה משתמש ב-[routerLink]
