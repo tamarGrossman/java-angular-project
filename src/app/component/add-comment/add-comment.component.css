@@ -1,0 +1,144 @@
+/* ==================================== */
+/* 🛑 קובץ: add-comment.component.css */
+/* ==================================== */
+
+.comment-form-container {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+    direction: rtl;
+    text-align: right;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.comment-form-container h4 {
+    color: #333;
+    font-size: 1.3em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #007bff;
+    display: inline-block; 
+}
+
+/* עיצוב תיבת הטקסט */
+textarea {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    resize: vertical; 
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+/* קבוצת קלט קבצים */
+.file-input-group {
+    display: block; 
+    margin-bottom: 20px;
+    font-size: 0.95em;
+}
+
+/* 🛑 הסתרת הקלט המקורי */
+input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+/* 🛑 עיצוב ה-Label כאלמנטים נפרדים וצמודים */
+.custom-file-upload {
+    display: flex; 
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    width: fit-content; 
+    transition: opacity 0.3s;
+}
+
+.file-label-text {
+    font-weight: bold;
+    color: #495057;
+    padding: 5px 0;
+}
+
+.file-input-button {
+    /* עיצוב הכפתור בפועל - ברירת מחדל */
+    background-color: #007bff; 
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s, opacity 0.3s;
+    white-space: nowrap; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.file-input-button:hover {
+    background-color: #0056b3;
+}
+
+/* 🛑 סגנון כאשר קובץ נבחר (מצב איפוס ויזואלי) */
+.custom-file-upload.file-selected .file-input-button {
+    /* צבע אפור כדי לסמן שהוא "תפוס" או נבחר */
+    background-color: #6c757d; 
+    color: #f8f9fa;
+    opacity: 0.9;
+    box-shadow: none; 
+}
+
+/* עיצוב כפתור השליחה */
+button { 
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.05em;
+    font-weight: 600;
+    transition: background-color 0.3s, opacity 0.3s;
+    margin-top: 10px;
+}
+
+button:hover:not([disabled]) {
+    background-color: #218838;
+}
+
+button:disabled {
+    background-color: #6c757d;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* הודעות שגיאה והצלחה */
+.error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.success-message {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+}

@@ -32,18 +32,15 @@ export class ChallengeLikeComponent implements OnInit, OnChanges {
     this.likeCount = this.initialLikeCount;
   }
 
-  // ⭐⭐ תיקון קריטי: הפונקציה הזו הייתה שבורה בקוד שלך! ⭐⭐
-  ngOnChanges(changes: SimpleChanges): void {
-    // אם האבא מעביר נתונים חדשים, הבן חייב להתעדכן מיד
-    if (changes['initialIsLiked']) {
-      this.isLiked = changes['initialIsLiked'].currentValue;
-    }
-    if (changes['initialLikeCount']) {
-      this.likeCount = changes['initialLikeCount'].currentValue;
-    }
-    // כפיית עדכון תצוגה ליתר ביטחון
-    this.cdr.detectChanges();
+ngOnChanges(changes: SimpleChanges): void {
+  if (changes['initialIsLiked'] && !changes['initialIsLiked'].firstChange) {
+    this.isLiked = changes['initialIsLiked'].currentValue;
   }
+  if (changes['initialLikeCount'] && !changes['initialLikeCount'].firstChange) {
+    this.likeCount = changes['initialLikeCount'].currentValue;
+  }
+  this.cdr.detectChanges();
+}
 
   public onToggleLike(): void {
     if (this.isProcessing) return;
@@ -79,10 +76,11 @@ export class ChallengeLikeComponent implements OnInit, OnChanges {
         // הצגת שגיאות
         const serverMsg = error.error?.message || error.error || null;
         switch (error.status) {
-          case 400: this.message = serverMsg || 'פעולה לא חוקית.'; break;
-          case 401: this.message = serverMsg || 'יש להתחבר.'; break;
-          case 403: this.message = serverMsg || 'יש להצטרף לאתגר.'; break;
-          default: this.message = serverMsg || 'שגיאה כללית.';
+          case 400: this.message = 'יש להצטרף לאתגר כדי לשים לייק'; break;
+          case 401: this.message= 'יש להתחבר.'; break;
+          case 403: this.message =  'יש להתחבר'; break;
+          case 409: this.message =  'אינך יכול לעשות לייק לאתגר שאתה יצרת'; break;
+          default: this.message = 'שגיאה כללית.';
         }
         
         if (this.message) setTimeout(() => {

@@ -10,8 +10,22 @@
     ></textarea>
 
     <div class="file-input-group">
-        <label for="fileInput">בחר תמונה:</label>
-        <input 
+                <label 
+            for="fileInput" 
+            class="custom-file-upload"
+            [ngClass]="{'file-selected': selectedFile}" 
+        >
+            <span class="file-label-text">בחר תמונה:</span>
+                        <span class="file-input-button">
+                @if (selectedFile) {
+                    ✅ קובץ נבחר
+                } @else {
+                    בחר קובץ...
+                }
+            </span> 
+        </label>
+        
+                <input 
             type="file" 
             id="fileInput" 
             (change)="onFileSelected($event)" 
@@ -23,7 +37,7 @@
     <button 
         (click)="submitComment()" 
         [disabled]="isLoading || !commentContent.trim()"     >
-                @if (isLoading) {
+                @if (isLoading) {
             שולח...
         } @else {
             שלח תגובה

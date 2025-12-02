@@ -1,18 +1,29 @@
 <div class="signup-container">
-  <h2>הרשמה</h2>
+  
+        <div *ngIf="!isLoggedIn">
+        <h2>הרשמה</h2>
 
-  <form (ngSubmit)="onSubmit()">
-    <label for="userName">שם משתמש:</label>
-    <input id="userName" name="userName" [(ngModel)]="user.username" required />
+        <form (ngSubmit)="onSubmit()">
+            <label for="userName">שם משתמש:</label>
+            <input id="userName" name="userName" [(ngModel)]="user.username" required />
 
-    <label for="email">אימייל:</label>
-    <input id="email" name="email" type="email" [(ngModel)]="user.email" required />
+            <label for="email">אימייל:</label>
+            <input id="email" name="email" type="email" [(ngModel)]="user.email" required />
 
-    <label for="password">סיסמה:</label>
-    <input id="password" name="password" type="password" [(ngModel)]="user.password" required />
+            <label for="password">סיסמה:</label>
+            <input id="password" name="password" type="password" [(ngModel)]="user.password" required />
 
-    <button type="submit">הרשמה</button>
-  </form>
-
-  <p class="message">{{ message }}</p>
+            <button type="submit">הרשמה</button>
+        </form>
+        
+                <p class="message" *ngIf="message && !isLoggedIn">{{ message }}</p>
+    </div>
+    
+        <div class="success-state" *ngIf="isLoggedIn && currentUsername">
+        <h3>✅ אישור הרשמה וחיבור מערכת</h3>
+        
+                <p class="success-message">{{ message }}</p> 
+        
+        
+    </div>
 </div>

@@ -1,7 +1,3 @@
-
-
-
-
 <!-- Hero Section -->
 <section class="hero">
   <div class="hero-content">
@@ -11,19 +7,10 @@
       <button (click)="navigateTo('challenges')">צפה בכל האתגרים</button>
       <button (click)="navigateTo('/register')">הצטרפי לאתגר</button>
       <button (click)="navigateTo('createChallenge')">העלאת אתגר</button>
-      <button (click)="navigateTo('signup')">הרשמה</button> <!-- הכפתור החדש -->
+      <button (click)="navigateTo('signup')">הרשמה</button>
     </div>
   </div>
 </section>
 
-<!-- Popular Challenges -->
-<section class="popular-challenges">
-  <h2>אתגרים פופולריים</h2>
-  <div class="cards-container">
-    <div class="challenge-card" *ngFor="let challenge of popularChallenges">
-      <h3>{{ challenge.title }}</h3>
-      <p>{{ challenge.description }}</p>
-      <button (click)="navigateTo('/all-challenges')">לפרטים</button>
-    </div>
-  </div>
-</section>
+<!-- הקרוסלה החדשה והמגניבה של האתגרים הפופולריים ביותר (לפי לייקים) -->
+<app-popular-challenges></app-popular-challenges>

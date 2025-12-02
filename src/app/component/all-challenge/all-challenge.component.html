@@ -1,25 +1,48 @@
-<div class="all-challenges-container">
-  <h2>כל האתגרים</h2>
-  
-  @if (challengeList.length === 0) {
-    <div class="no-challenges-message">
-      עדיין אין אתגרים להצגה.
+<div class="motivation-box-fixed-wrapper">
+    <div class="motivation-box" [class.slide-out]="!isPhraseVisible">
+        <p class="motivation-text">{{ currentMotivationPhrase }}</p>
     </div>
-  }
+</div>
 
-  @if (challengeList.length > 0) {
-    <ul class="challenge-list">
-      @for (challenge of challengeList; track challenge.id) {
-        <li class="challenge-item">
-          
-          <a [routerLink]="['/challenge', challenge.id]" class="challenge-title-link">
-            <h3>{{ challenge.name }}</h3>
-          </a>
-          
-          <p><strong>נוצר על ידי :</strong> {{ challenge.userName }}</p>
-          
-        </li>
-      } 
-      </ul>
-  }
+
+<div class="main-layout-container-simple">
+    <div class="all-challenges-container challenges-container">
+        <h2>כל האתגרים</h2>
+    
+        @if (challengeList.length === 0) {
+            <div class="no-challenges-message">
+                עדיין אין אתגרים להצגה.
+            </div>
+        }
+    
+        @if (challengeList.length > 0) {
+            <ul class="challenge-list">
+                @for (challenge of challengeList; track challenge.id) {
+                    <li class="challenge-item" [routerLink]="['/challenge', challenge.id]">
+        
+                        <div class="challenge-header">
+                            <h3 class="challenge-name">{{ challenge.name }}</h3>
+                        </div>
+        
+                        <p class="challenge-author"><strong>נוצר על ידי:</strong> {{ challenge.userName }}</p>
+        
+                        <div class="challenge-body">
+                            @if (challenge.picture) {
+                                <div class="challenge-picture-container">
+                                    <img [src]="challenge.picture" alt="תמונת אתגר" class="challenge-picture">
+                                </div>
+                            }
+                            <p class="challenge-description">{{ challenge.description }}</p>
+                        </div>
+        
+                        <div class="challenge-footer">
+                            <span class="challenge-days">מספר ימי האתגר: {{ challenge.numOfDays }} </span>
+                            <button class="view-button">קרא עוד </button>
+                        </div>
+        
+                    </li>
+                } 
+            </ul>
+        }
+    </div>
 </div>

@@ -147,4 +147,10 @@ getCurrentUsername(): Observable<string> {
     // זוהי רק דרך נוחה לגשת לשם המשתמש מבלי להתחבר ישירות ל-BehaviorSubject
     return this.currentUser$;
 }
+public setLoggedInStatus(username: string): void {
+    if (username && username.trim() !== '') {
+        this._isLoggedIn.next(true);
+        this._currentUser.next(username);
+    }
   }
+ }

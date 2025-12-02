@@ -6,17 +6,22 @@
     </div>
   }
 
-  @if (challenge) {
-    <div class="challenge-card">
+  @if (challenge) { 
+        <div class="challenge-card">
       
       <header class="card-header">
-        <h1 class="challenge-name">{{ challenge?.name }}</h1>
+        <h1 class="challenge-name">{{ challenge.name }}</h1>
       </header>
 
       <div class="card-body">
         
+                <div class="description-box">
+            <p class="description-title">תיאור האתגר:</p>
+            <p class="challenge-description">{{ challenge.description }}</p>
+        </div>
+        
         @if (challenge.picture) {
-          <div class="image-container">
+                  <div class="image-container">
             <img 
               [src]="'data:image/jpeg;base64,' + challenge.picture" 
               [alt]="'תמונת אתגר: ' + challenge.name" 
@@ -25,58 +30,53 @@
           </div>
         }
         
-@if (challenge) {
-        <app-challenge-like
-          [challengeId]="challenge.id"
-          [initialIsLiked]="challenge.isLikedByCurrentUser"
-          [initialLikeCount]="challenge.likeCount"
-          (likeStatusChanged)="onLikeStatusUpdated($event)">
-        </app-challenge-like>
-      }
-                
-        <p class="description-title">תיאור האתגר:</p>
-        <p class="challenge-description">{{ challenge.description }}</p>
-        
         <hr>
 
         <div class="challenge-meta">
-          <p><strong>מזהה:</strong> {{ challenge.id }}</p>
           <p><strong>משך זמן:</strong> {{ challenge.numOfDays }} ימים</p>
           <p><strong>תאריך יצירה:</strong> {{ challenge.date | date: 'dd/MM/yyyy' }}</p>
           <p><strong>נוצר על ידי:</strong> {{ challenge.userName }}</p>
-          
-          <button [routerLink]="['/challenges']" class="back-button">חזרה לרשימת האתגרים</button>
-
         </div>
-
-        <div class="comment-actions-group">
-            <button (click)="toggleCommentForm()" class="btn btn-secondary toggle-button">
-                @if (showCommentForm) {
-                    הסתר טופס תגובה
-                } @else {
-                    הוסף תגובה (במקום) ✏️
-                }
-            </button>
-            
-            <button 
-                [routerLink]="['/add-comment', challenge.id]" 
-                class="btn btn-info navigate-button">
-                ניווט לעמוד תגובה חדש
-            </button>
-        </div>
-              </div>
-    </div>
-@if (showCommentForm) {
-    <div class="add-comment-section">
-        <app-add-comment 
-            [challengeId]="challenge.id"  
-            (commentAdded)="onCommentAddedSuccess()">
-        </app-add-comment>
-    </div>
-}
+        
+                </div>
+              </div> 
     
-    <div class="comments-section">
-      <h3>💬 תגובות לאתגר ({{ comments.length }})</h3>
+        <div class="like-and-buttons-section">
+        <app-challenge-like
+            [challengeId]="challenge.id"
+            [initialIsLiked]="challenge.isLikedByCurrentUser === true"
+            [initialLikeCount]="challenge.likeCount || 0"
+            (likeStatusChanged)="onLikeStatusUpdated($event)">
+        </app-challenge-like>
+        
+        <div class="action-buttons">
+            <button [routerLink]="['/challenges']" class="back-button"> לכל האתגרים </button>
+            <button 
+                (click)="joinChallenge()" 
+                [disabled]="isJoining" 
+                class="btn btn-primary join-button">
+                {{ isJoining ? 'מצטרף...' : 'הצטרף לאתגר' }}
+            </button>
+        </div>
+    </div>
+    
+    @if (commentSuccessMessage) {
+        <div class="comment-success-toast">
+            {{ commentSuccessMessage }}
+        </div>
+    }
+
+        @if (showCommentForm) {
+        <div class="add-comment-wrapper">
+            <app-add-comment 
+                [challengeId]="challenge.id"  
+                (commentAdded)="onCommentAddedSuccess()">
+            </app-add-comment>
+        </div>
+    }
+    
+            <div class="comments-section">
+            <h3>💬 תגובות לאתגר ({{ comments?.length || 0 }})</h3>
 
       <hr>
 
@@ -106,19 +106,12 @@
         <p>אין עדיין תגובות לאתגר זה. היו הראשונים להגיב!</p>
       }
     </div>
-          } @else if (!isLoading) { 
+                    
+    } @else if (!isLoading) { 
     <div class="error-message">
         <h2>404 - האתגר לא נמצא</h2>
         <p>מצטערים, לא הצלחנו למצוא את האתגר עם מזהה {{ challengeId }}.</p>
     </div>
     
   }
-  
-    <button 
-    (click)="joinChallenge()" 
-    [disabled]="isJoining" 
-    class="btn btn-primary join-button">
-    {{ isJoining ? 'מצטרף...' : 'הצטרף לאתגר' }}
-  </button>
-
 </div>

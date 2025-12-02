@@ -5,10 +5,11 @@ import { CommentService } from '../../service/comment.service';
 // ⬅️ ניתן להחליף את Comment ב-any אם המודל לא נחוץ כאן
 import { Comment } from '../../models/comment.model'; 
 import { FormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-add-comment',
-  imports: [FormsModule],
+  imports: [FormsModule,NgClass],
   standalone: true,
   templateUrl: './add-comment.component.html',
   styleUrl: './add-comment.component.css'
@@ -31,9 +32,16 @@ selectedFile: File | null = null; // ✅ שדה חדש לטיפול בקובץ
    */
 handleSuccess(): void {
     console.log('1. [ADD_COMMENT] START HANDLE SUCCESS: Setting message.');
-    this.message = 'התגובה הוספה בהצלחה! 🎉'; 
+    this.message = '✅ התגובה נוספה בהצלחה!';
+
     this.isError = false;
-    this.commentContent = ''; // איפוס תיבת הטקסט
+    this.commentContent = '';
+this.selectedFile = null;
+const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    if (fileInput) {
+        // שורה 1: איפוס הערך של הקלט
+        fileInput.value = ''; 
+    } // איפוס תיבת הטקסט
     
     // ✅ 1. הפצת האירוע באופן מיידי!
     console.log('2. [ADD_COMMENT] EMITTING EVENT: Telling parent to refresh comments list.');

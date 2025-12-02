@@ -5,6 +5,7 @@ import { usersService } from '../../service/users.service';
 import { Users } from '../../models/users.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 // אם דרוש ניווט, יש לייבא את Router
@@ -28,7 +29,7 @@ export class SigninComponent {
   currentUsername: string = ''; // המשתנה שמחובר ל-HTML
 
   // הוסף את Router אם אתה משתמש בו לניווט
-  constructor(private usersService: usersService /*, private router: Router*/) {
+  constructor(private usersService: usersService , private router: Router) {
     // 1. הרשמה לסטטוס ההתחברות
     this.usersService.isLoggedIn$.subscribe(status => this.isLoggedIn = status);
 
@@ -65,16 +66,16 @@ export class SigninComponent {
              this.message = `התחברת בהצלחה! שלום ${response}`;
         }
         
-        // 💡 ניווט (אם מופעל)
-        // setTimeout(() => { this.router.navigate(['/']); }, 1500); 
+        // 🛑 שינוי קריטי: ניווט אוטומטי לדף הבית לאחר 3 שניות (3000ms)
+        setTimeout(() => { 
+            this.router.navigate(['/']); 
+        }, 2000); 
       },
 
       // 4. כישלון:
       error: (err) => {
         console.error('שגיאה בהתחברות:', err);
-        // אין צורך לנקות את currentUsername אם ה-Service לא הצליח לעדכן אותו
-        
-        // ניתוח סוג השגיאה
+        // ... (טיפול בשגיאות נשאר כפי שהיה)
         if (err.status === 403 || err.status === 401) {
           this.message = 'שם המשתמש או הסיסמה שגויים';
         } else if (err.status === 404) {

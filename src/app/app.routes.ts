@@ -14,6 +14,7 @@ import { UploadedChallengesComponent } from './component/uploaded-challenges/upl
 import { JoinedChallengesComponent } from './component/joined-challenges/joined-challenges.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { ChallengeLikeComponent } from './component/challenge-like/challenge-like.component';
+import { PopularChallengesComponent } from './component/popular-challenges/popular-challenges.component';
 export const routes: Routes = [
 {path:'',component:HomeComponent},
 {path:'challenges',component:AllChallengeComponent },
@@ -29,5 +30,7 @@ export const routes: Routes = [
 { path: 'joined-challenges/:userId', component: JoinedChallengesComponent },
 { path: 'user-comments/:userId', component: UserCommentsComponent },
 {path:'profile',component:ProfileComponent},
-{path:'like',component:ChallengeLikeComponent}
+{path:'like',component:ChallengeLikeComponent},
+{path:'popular-challenges',component:PopularChallengesComponent}
+
 ];

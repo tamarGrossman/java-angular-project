@@ -1,31 +1,27 @@
-
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import {  CommonModule} from '@angular/common'; 
-import { RouterModule } from '@angular/router'; 
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
+// הכי חשוב – הוספנו את הקומפוננטה שלנו!
+import { PopularChallengesComponent } from '../popular-challenges/popular-challenges.component';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule,RouterModule],
   standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    PopularChallengesComponent   // ← זה מה שמאפשר להשתמש ב-<app-popular-challenges>
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
-  popularChallenges = [
-    { title: 'אתגר ריצה 5 ק״מ', description: 'אתגר לשפר כושר אירובי.' },
-    { title: 'אתגר כוח', description: 'חיזוק כל הגוף עם תרגילים פשוטים בבית.' },
-    { title: 'אתגר בריאות', description: 'הרגלי תזונה ובריאות שבועיים.' }
-  ];
-
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
-  }
+  constructor(private router: Router) {}
 
   navigateTo(path: string) {
     this.router.navigate([path]);
   }
-
 }

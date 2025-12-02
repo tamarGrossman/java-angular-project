@@ -1,0 +1,62 @@
+<div class="popular-section">
+  <h2 class="section-title">אתגרים פופולריים כרגע</h2>
+
+  @if (isLoading) {
+    <div class="loading">טוען אתגרים פופולריים...</div>
+  }
+
+  <div class="carousel-container">
+
+    <div class="carousel-track"
+         [style.transform]="'translateX(-' + (currentIndex * (100 / itemsToShow)) + '%)'">
+
+      @for (challenge of popularChallenges; track challenge.id) {
+        <div class="carousel-slide" [style.width.%]="100 / itemsToShow">
+
+          <div class="modern-card" [routerLink]="['/challenge', challenge.id]">
+
+            @if (challenge.picture) {
+              <div class="card-image">
+                <img [src]="'data:image/jpeg;base64,' + challenge.picture" 
+                     alt="{{challenge.name}}" />
+              </div>
+            } 
+
+            <div class="card-content">
+              <h3 class="card-title">{{ challenge.name }}</h3>
+              <p class="card-description">{{ challenge.description | slice:0:75 }}...</p>
+
+              <div class="card-footer">
+                <div class="date-info">
+                  <span class="start-date">הועלה ב- {{ challenge.date | date:'dd.MM' }}</span>
+                </div>
+
+                <div class="likes-info">
+                  <span class="heart">❤️</span>
+                  <strong>{{ challenge.likeCount }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      }
+
+      <!-- מילוי ריק אם יש פחות מ-itemsToShow כדי שלא יהיה חלל -->
+      @for (i of emptySlides(); track i) {
+        <div class="carousel-slide" [style.width.%]="100 / itemsToShow">
+          <div class="modern-card dummy-card"></div>
+        </div>
+      }
+
+    </div>
+
+    <button class="nav-btn prev" (click)="prev()" [disabled]="currentIndex === 0">‹</button>
+<button class="nav-btn next" (click)="next()" [disabled]="currentIndex >= maxIndex()">›</button>
+    <div class="dots">
+      @for (n of getDots(); track $index) {
+        <span class="dot" [class.active]="currentIndex === $index" (click)="goToSlide($index)"></span>
+      }
+    </div>
+  </div>
+</div>

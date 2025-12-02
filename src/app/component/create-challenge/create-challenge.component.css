@@ -1,55 +1,202 @@
-.create-challenge-container {
-  max-width: 500px;
-  margin: 50px auto;
-  padding: 25px;
-  background: #ffffff;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  direction: rtl;
+/* ======================================= */
+/* 1. מיכל ראשי ופריסה */
+/* ======================================= */
+
+.challenge-form-container {
+    max-width: 600px; /* רוחב מוגבל למראה נקי ומרוכז */
+    margin: 50px auto; /* מרכוז בדף ומרחב מלמעלה */
+    padding: 30px;
+    background: #ffffff; /* רקע לבן לטופס */
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* צל עדין להבלטה */
+    direction: rtl; /* יישור לימין */
+    font-family: 'Arial', sans-serif;
 }
 
-h2 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
+.challenge-form-container h2 {
+    text-align: center;
+    color: #333; /* צבע כהה לכותרת */
+    margin-bottom: 30px;
+    font-size: 1.8em;
+    border-bottom: 2px solid #007bff; /* קו תחתון כחול */
+    padding-bottom: 10px;
 }
+
+/* ======================================= */
+/* 2. קבוצות שדות (Form Groups) */
+/* ======================================= */
 
 .form-group {
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
+    margin-bottom: 20px;
 }
 
-label {
-  font-weight: bold;
-  margin-bottom: 5px;
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+    font-size: 1em;
 }
 
-input,
-textarea {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
+/* ======================================= */
+/* 3. שדות קלט (Inputs & Textarea) */
+/* ======================================= */
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box; /* חשוב! */
+    transition: border-color 0.3s, box-shadow 0.3s;
+    font-size: 1em;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  transition:  0.3s ease;
+.form-group textarea {
+    resize: vertical; /* מאפשר שינוי גודל רק אנכית */
+    min-height: 120px;
 }
 
-button:hover {
-  background-color: #2563eb;
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007bff; /* הבלטת פוקוס בכחול */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    outline: none;
 }
 
-button:disabled {
-  background-color: #a5b4fc;
-  cursor: not-allowed;
+/* ======================================= */
+/* 4. קלט קובץ (File Input) */
+/* ======================================= */
+
+.form-group input[type="file"] {
+    /* הסתרת כפתור ברירת המחדל, אם נדרש עיצוב מותאם אישית */
+    /* opacity: 0; 
+    position: absolute; 
+    z-index: -1; */
+
+    /* עיצוב בסיסי */
+    padding: 10px 0; 
+}
+
+
+/* ======================================= */
+/* 5. כפתור שליחה (Submit Button) */
+/* ======================================= */
+
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-top: 30px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* מצב מנוטרל (Disabled) */
+button[type="submit"]:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* ======================================= */
+/* 6. הודעות (Success/Error Messages) */
+/* ======================================= */
+
+.success, .error {
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+/* ======================================= */
+/* 4. קלט קובץ (עיצוב מותאם אישית) */
+/* ======================================= */
+
+/* 1. הסתרת הקלט המקורי */
+.file-input-hidden {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+/* 2. עיצוב הכפתור באמצעות התווית (Label) */
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #f0f0f0; /* רקע אפור בהיר */
+    color: #333; /* צבע טקסט כהה */
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* אפקט ריחוף (Hover) */
+.custom-file-upload:hover {
+    background-color: #e0e0e0;
+    border-color: #999;
+}
+
+/* אפקט פוקוס (Focus) - למקרה של ניווט עם מקלדת */
+.file-input-hidden:focus + .custom-file-upload {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+/* 3. עיצוב שם הקובץ הנבחר */
+.file-upload-group {
+    display: flex;
+    flex-wrap: wrap; /* מאפשר שבירת שורה */
+    align-items: center;
+    gap: 15px; /* מרווח בין האלמנטים */
+}
+
+.file-upload-group > label:first-child {
+    /* התווית הראשונה (בחר תמונה) */
+    width: 100%;
+}
+
+.file-name-display {
+    padding: 8px 10px;
+    background: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    color: #555;
+    font-style: italic;
+    flex-grow: 1; /* יתפוס את השטח שנותר ליד הכפתור */
+    min-width: 150px;
 }

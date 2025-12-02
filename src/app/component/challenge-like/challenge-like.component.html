@@ -1,24 +1,29 @@
 <div class="like-container">
-  <span class="like-count">{{ likeCount }}</span>
+  <span class="like-count">{{ likeCount }}</span>
 
-  <button 
-    (click)="onToggleLike()" 
-    [disabled]="isProcessing"
-    [ngClass]="{'liked': isLiked, 'not-liked': !isLiked}"
-  >
-    <span *ngIf="isLiked; else notLiked">
-      ❤️ (בטל לייק)
-    </span>
-    <ng-template #notLiked>
-      🤍 (הוסף לייק)
-    </ng-template>
-  </button>
-  
-  <div *ngIf="message" class="error-message">
-    {{ message }}
-  </div>
+  <button 
+    (click)="onToggleLike()" 
+    [disabled]="isProcessing"
+    [ngClass]="{'liked': isLiked, 'not-liked': !isLiked}"
+  >
+    @if (isLiked) {
+      <span class="like-emoji">❤️</span> 
+      <span class="like-text">(בטל לייק)</span>
+    } @else {
+      <span class="like-emoji">🤍</span>
+      <span class="like-text">(הוסף לייק)</span>
+    }
+  </button>
+  
+  @if (message) {
+    <div class="error-message">
+      {{ message }}
+    </div>
+  }
 
-  <div *ngIf="isProcessing" class="loading-indicator">
-    ...בטעינה
-  </div>
+  @if (isProcessing) {
+    <div class="loading-indicator">
+      ...בטעינה
+    </div>
+  }
 </div>

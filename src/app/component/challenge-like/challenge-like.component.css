@@ -1,0 +1,73 @@
+/* ==================================== */
+/* 🛑 קובץ: challenge-like.component.css */
+/* ==================================== */
+
+.like-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    /* מאפסים את ה-gap כדי שמרג'ינים ישלטו */
+    gap: 0; 
+    padding: 0;
+    transition: transform 0.15s ease-in-out;
+    /* חשוב מאוד לוודא שאין גובה מיותר שמרחיק את המונה אנכית */
+    line-height: 1; 
+}
+
+button:hover:not([disabled]) {
+    transform: scale(1.1); 
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+/* 🛑 הסתרת הטקסט הלא רצוי */
+.like-text {
+    display: none !important; 
+}
+
+/* עיצוב האימוג'י (הלב) */
+.like-emoji {
+    font-size: 2.2em; 
+    line-height: 1;
+    /* 🛑 שינוי קריטי לצמצום רווח: דוחף את המונה פנימה ב-15 פיקסלים */
+    margin-right: -100px; 
+    /* מרג'ין קטן משמאל לוודא שהכפתור לחיץ בקלות */
+    margin-left: 2px;
+}
+
+/* עיצוב המונה */
+.like-count {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #495057;
+    /* 🛑 שינוי קריטי לצמצום רווח: מאפס את המרג'ין השלילי על המונה עצמו. 
+       המונה יצמד אוטומטית כי האימוג'י דוחף אותו באמצעות ה-margin-right השלילי שלו. */
+    margin-left: 0; 
+}
+
+/* צבע האימוג'י במצב לחוץ */
+.liked .like-emoji {
+    color: #ff4500; 
+}
+
+/* צבע האימוג'י במצב לא לחוץ */
+.not-liked .like-emoji {
+    color: #495057; 
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.8em;
+    margin-right: 10px;
+}

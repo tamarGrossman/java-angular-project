@@ -83,6 +83,12 @@ addLikeChallenge(challengeId: number): Observable<any> {
     
     return this.http.post(url, {}, { 
         withCredentials: true,
-        responseType: 'text' // 👈 ודאי שזה קיים!
     });
-}}
+}
+// אחרי הפונקציות הקיימות שלך (למשל אחרי getJoinedChallenges או addLikeChallenge)
+
+getPopularChallenges(limit?: number): Observable<Challenge[]> {
+  // פשוט קוראים ל-/popular בלי פרמטרים
+  return this.http.get<Challenge[]>(`${this.baseUrl}/popular`, { withCredentials: true });
+}
+}

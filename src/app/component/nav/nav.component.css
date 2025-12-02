@@ -1,6 +1,6 @@
 /* --------------------------
-   Navbar הראשי
-   -------------------------- */
+    Navbar הראשי
+    -------------------------- */
 .navbar {
   position: fixed;
   top: 0;
@@ -9,36 +9,41 @@
   display: flex;
   align-items: center;
   justify-content: center; /* מרכז את כל התוכן */
-  background: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px 20px;
+  background: #1A2330; /* כחול נייבי עמוק */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* צל עמוק יותר למראה רשמי */
+  
+  /* 💡 עדכון: הגדלת הרווח הפנימי כדי לתפוס יותר מקום אנכית */
+  padding: 15px 20px; 
+  
   z-index: 1000;
   direction: rtl;
-  flex-wrap: wrap; /* מאפשר שבירה לשורה שנייה אם צריך */
+  flex-wrap: wrap; 
   font-family: 'Heebo', Arial, sans-serif;
 }
 
 /* --------------------------
-   לוגו במרכז
-   -------------------------- */
+    לוגו במרכז
+    -------------------------- */
 .logo {
-  font-size: 1.5rem;
+  /* 💡 עדכון: הגדלת גודל הלוגו */
+  font-size: 1.8rem;
+  
   font-weight: 700;
   color: #1abc9c;
-  text-align: center; /* במרכז */
-  white-space: nowrap; /* לא נשבר לשורות */
+  text-align: center; 
+  white-space: nowrap; 
   margin-bottom: 8px;
   flex-shrink: 0;
 }
 
 /* --------------------------
-   קישורי ניווט
-   -------------------------- */
+    קישורי ניווט
+    -------------------------- */
 .nav-links {
   display: flex;
   justify-content: center; /* מרכז את הקישורים */
-  flex-wrap: wrap; /* מאפשר ירידה לשורה נוספת אם אין מקום */
-  gap: 12px;
+  flex-wrap: wrap; 
+  gap: 16px; /* 💡 הגדלת הרווח בין קישורים */
   overflow-x: auto; 
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -51,10 +56,13 @@
 
 .nav-links a {
   text-decoration: none;
-  font-size: 0.95rem;
+  
+  /* 💡 עדכון: הגדלת גודל הפונט של הקישורים */
+  font-size: 1.05rem; 
+  
   font-weight: 500;
-  color: #34495e;
-  padding: 6px 12px;
+  color: white;
+  padding: 8px 14px; /* 💡 הגדלת ה-padding לרווח סביב הטקסט */
   border-radius: 6px;
   transition: all 0.3s ease;
   white-space: nowrap;
@@ -66,15 +74,16 @@
 }
 
 /* --------------------------
-   רווח מתחת ל-navbar
-   -------------------------- */
+    רווח מתחת ל-navbar
+    -------------------------- */
 body {
-  padding-top: 80px; /* כדי שהתוכן לא יתחבא מאחורי ה-navbar */
+  /* 💡 עדכון: הגדלת המרווח כדי להתאים לגובה החדש של ה-navbar (כ-95px) */
+  padding-top: 100px; 
 }
 
 /* --------------------------
-   מסכים קטנים
-   -------------------------- */
+    מסכים קטנים
+    -------------------------- */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -83,16 +92,20 @@ body {
   }
 
   .logo {
-    font-size: 1.3rem;
+    font-size: 1.5rem; /* הותאם לגודל חדש */
   }
 
   .nav-links {
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
   }
 
   .nav-links a {
-    font-size: 0.9rem;
-    padding: 5px 10px;
+    font-size: 1rem; /* הותאם לגודל חדש */
+    padding: 6px 12px;
+  }
+  
+  body {
+    padding-top: 100px; /* שמירה על מרווח גם במובייל */
   }
 }
