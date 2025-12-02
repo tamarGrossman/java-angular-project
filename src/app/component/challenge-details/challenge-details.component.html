@@ -26,15 +26,13 @@
         }
         
 @if (challenge) {
-    <app-challenge-like
-                [challengeId]="challenge.id ?? 0"
-        
-                [initialIsLiked]="challenge.isLikedByCurrentUser" 
-        [initialLikeCount]="challenge.likeCount"
-        
-        (likeStatusChanged)="onLikeStatusUpdated($event)"
-    ></app-challenge-like>
-}
+        <app-challenge-like
+          [challengeId]="challenge.id"
+          [initialIsLiked]="challenge.isLikedByCurrentUser"
+          [initialLikeCount]="challenge.likeCount"
+          (likeStatusChanged)="onLikeStatusUpdated($event)">
+        </app-challenge-like>
+      }
                 
         <p class="description-title">תיאור האתגר:</p>
         <p class="challenge-description">{{ challenge.description }}</p>

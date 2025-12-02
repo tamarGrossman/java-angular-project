@@ -6,22 +6,19 @@
     [disabled]="isProcessing"
     [ngClass]="{'liked': isLiked, 'not-liked': !isLiked}"
   >
-    @if (isLiked) {
+    <span *ngIf="isLiked; else notLiked">
       ❤️ (בטל לייק)
-    } @else {
+    </span>
+    <ng-template #notLiked>
       🤍 (הוסף לייק)
-    }
+    </ng-template>
   </button>
   
-@if (message) {
-    <div class="error-message">
-      {{ message }}
-    </div>
-}
+  <div *ngIf="message" class="error-message">
+    {{ message }}
+  </div>
 
-  @if (isProcessing) {
-    <div class="loading-indicator">
-      ...בטעינה
-    </div>
-  }
+  <div *ngIf="isProcessing" class="loading-indicator">
+    ...בטעינה
+  </div>
 </div>

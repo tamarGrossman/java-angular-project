@@ -1,109 +1,99 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ChallengeService } from '../../service/challenge.service';
-import { CommonModule } from '@angular/common'; // ⭐⭐⭐ הוספת NgClass מ-@angular/common
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-challenge-like',
-  imports: [CommonModule],
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './challenge-like.component.html',
-  styleUrl: './challenge-like.component.css'
+  styleUrls: ['./challenge-like.component.css']  // <-- שים לב: styleUrls (ברשימה)
 })
 export class ChallengeLikeComponent implements OnInit, OnChanges {
-// ⭐ קלט: מזהה האתגר (חובה)
-  @Input() challengeId!: number; 
-  
-  // ⭐ קלט (אופציונלי): המצב ההתחלתי של הלייק (האם המשתמש נתן לייק)
+  @Input() challengeId?: number;
   @Input() initialIsLiked: boolean = false;
+  @Input() initialLikeCount: number = 0;
   
-  // ⭐ קלט (אופציונלי): ספירת הלייקים ההתחלתית 
-  @Input() initialLikeCount: number = 0; 
-@Output() likeStatusChanged = new EventEmitter<{newCount: number, isLiked: boolean}>();
-  // משתני מצב פנימיים
+  @Output() likeStatusChanged = new EventEmitter<{newCount: number, isLiked: boolean}>();
+
   isLiked: boolean = false;
   likeCount: number = 0;
   isProcessing: boolean = false;
-  message: string | null = null; 
+  message: string | null = null;
 
-  constructor(private challengeService: ChallengeService) { }
+  // ⭐ הוספתי את ChangeDetectorRef (cdr) כדי לכפות עדכון תצוגה
+  constructor(
+    private challengeService: ChallengeService,
+    private cdr: ChangeDetectorRef 
+  ) { }
 
   ngOnInit(): void {
-    // אתחול המצב הפנימי מהקלט
     this.isLiked = this.initialIsLiked;
     this.likeCount = this.initialLikeCount;
   }
-// ⭐⭐ הוספת הפונקציה הקריטית לפתרון סנכרון מצב חוזר ⭐⭐
-    ngOnChanges(changes: SimpleChanges): void {
-        // בודק אם ה-Input של isLiked השתנה
-        if (changes['initialIsLiked'] && !changes['initialIsLiked'].isFirstChange()) {
-            this.isLiked = changes['initialIsLiked'].currentValue;
-        }
-        // בודק אם ה-Input של likeCount השתנה
-        if (changes['initialLikeCount'] && !changes['initialLikeCount'].isFirstChange()) {
-            this.likeCount = changes['initialLikeCount'].currentValue;
-        }
+
+  // ⭐⭐ תיקון קריטי: הפונקציה הזו הייתה שבורה בקוד שלך! ⭐⭐
+  ngOnChanges(changes: SimpleChanges): void {
+    // אם האבא מעביר נתונים חדשים, הבן חייב להתעדכן מיד
+    if (changes['initialIsLiked']) {
+      this.isLiked = changes['initialIsLiked'].currentValue;
     }
-  /**
-   * מטפל בלוגיקת ה-TOGGLE לייק.
-   * קורא לשירות ומעדכן את המצב.
-   */
+    if (changes['initialLikeCount']) {
+      this.likeCount = changes['initialLikeCount'].currentValue;
+    }
+    // כפיית עדכון תצוגה ליתר ביטחון
+    this.cdr.detectChanges();
+  }
+
   public onToggleLike(): void {
     if (this.isProcessing) return;
+    if (this.challengeId === undefined || this.challengeId === null) return;
 
     this.isProcessing = true;
-    this.message = null; 
+    this.message = null;
 
- // ⭐⭐ 2. שמירת המצב הקודם ל-Rollback ⭐⭐
-    const previousIsLiked = this.isLiked;
-    const previousLikeCount = this.likeCount;
-
-  console.log(`[LIKE] לחיצה. מצב קודם: isLiked=${previousIsLiked}, count=${previousLikeCount}`);
-
+    // שליחה לשרת
     this.challengeService.addLikeChallenge(this.challengeId).subscribe({
-      next: () => {
+      next: (res) => {
+        // קבלת הנתונים האמיתיים מהשרת
+        const serverIsLiked = !!res.liked;
+        const serverCount = Number(res.likeCount);
+
+        // עדכון המשתנים המקומיים
+        if (!isNaN(serverCount)) {
+          this.likeCount = serverCount;
+        }
+        this.isLiked = serverIsLiked;
+
+        // שליחת עדכון לאבא (כדי שיסנכרן את שאר המערכת)
+        this.likeStatusChanged.emit({ newCount: this.likeCount, isLiked: this.isLiked });
+
         this.isProcessing = false;
-        this.isLiked = !previousIsLiked; 
-        this.likeCount = this.isLiked ? previousLikeCount + 1 : previousLikeCount - 1;
-        console.log(`[LIKE] הצלחה (200 OK). מצב חדש: isLiked=${this.isLiked}, count=${this.likeCount}`);
-        // ⭐⭐ 4. שידור השינוי לרכיב האב ⭐⭐
-        this.likeStatusChanged.emit({ 
-            newCount: this.likeCount, 
-            isLiked: this.isLiked 
-        });
+        
+        // ⭐⭐ הקסם: הפקודה הזו אומרת לאנגולר "תרענן את המספרים על המסך עכשיו!" ⭐⭐
+        this.cdr.detectChanges();
       },
       error: (error) => {
-        // ⭐⭐ 5. במקרה של שגיאה - גלגול לאחור והצגת הודעה ⭐⭐
-       this.isLiked = previousIsLiked;
-        this.likeCount = previousLikeCount;
-        this.isProcessing = false;
+        this.isProcessing = false;
         
-        const status = error.status; 
+        // הצגת שגיאות
+        const serverMsg = error.error?.message || error.error || null;
+        switch (error.status) {
+          case 400: this.message = serverMsg || 'פעולה לא חוקית.'; break;
+          case 401: this.message = serverMsg || 'יש להתחבר.'; break;
+          case 403: this.message = serverMsg || 'יש להצטרף לאתגר.'; break;
+          default: this.message = serverMsg || 'שגיאה כללית.';
+        }
         
-        switch (status) {
-          case 400: 
-            this.message = 'שגיאה: אינך יכול לעשות לייק לאתר שאתה יצרת.';
-            break;
-          case 401: 
-            this.message = 'שגיאה: אינך מחובר.';
-            break;
-          case 403: 
-            this.message = ' עליך להצטרף לאתגר כדי לתת לייק.'; 
-            break;
-          case 404: 
-            this.message = 'שגיאה: אתגר לא נמצא.';
-            break;
-          default:
-            this.message = 'אירעה שגיאה. נסה שוב מאוחר יותר.';
-            break;
-        }
-        // ⭐⭐ תיקון: מנקה את ההודעה לאחר 5 שניות ⭐⭐
-        if (this.message) {
-            setTimeout(() => {
-                this.message = null;
-            }, 5000); // ההודעה תופיע ל-5 שניות
-        }
-        console.error(`[LIKE] שגיאה! סטטוס: ${error.status}, הודעה: ${this.message}`);
+        if (this.message) setTimeout(() => {
+           this.message = null;
+           this.cdr.detectChanges(); // רענון כדי להעלים את ההודעה
+        }, 4000);
+        
+        console.error('[LIKE] error', error);
+        this.cdr.detectChanges(); // רענון כדי להציג את השגיאה
       }
     });
   }
 }
+
