@@ -65,6 +65,7 @@ startMotivationRotation(): void {
         
     }, intervalTime); 
   }
+
 }
 
   /**

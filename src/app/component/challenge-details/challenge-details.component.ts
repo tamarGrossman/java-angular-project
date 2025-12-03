@@ -10,6 +10,7 @@ import { RouterLink } from '@angular/router';
 import { CommentService } from '../../service/comment.service';
 import { Comment } from '../../models/comment.model';
 import { ChallengeLikeComponent } from '../challenge-like/challenge-like.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-challenge-details',
@@ -24,6 +25,7 @@ export class ChallengeDetailsComponent implements OnInit {
   isLoading: boolean = true;
   isJoining: boolean = false; 
   comments: Comment[] = [];
+
 
 showCommentForm: boolean = true;    // ✅ שדה חדש: להצגת הודעת ההצלחה
     commentSuccessMessage: string | null = null;
@@ -105,7 +107,13 @@ onLikeStatusUpdated(status: { newCount: number; isLiked: boolean }) {
 
     this.challengeService.joinChallenge(this.challengeId).subscribe({
       next: (response) => {
-        alert('הצטרפת לאתגר בהצלחה!');
+           Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "הצטרפת לאתגר בהצלחה!", 
+                  showConfirmButton: false,
+                  timer: 3000 // 3 שניות
+                });
         console.log('Join Success:', response);
         this.isJoining = false;
         this.router.navigate(['/my-challenges']); 
@@ -114,9 +122,21 @@ onLikeStatusUpdated(status: { newCount: number; isLiked: boolean }) {
         this.isJoining = false;
         const errorMessage = err.error || 'שגיאה בהצטרפות. אנא ודא שאתה מחובר.';
         if (err.status === 400 && errorMessage.includes('כבר הצטרף')) {
-          alert('אתה כבר רשום לאתגר זה.');
+                Swal.fire({
+                  position: "top-end",
+                  icon: "error",
+                  title: " הנך כבר מצורף לאתגר זה", 
+                  showConfirmButton: false,
+                  timer: 3000 // 3 שניות
+                });
         } else if (err.status === 401 || err.status === 403) {
-          alert('עליך להתחבר כדי להצטרף לאתגר.');
+                Swal.fire({
+                  position: "top-end",
+                  icon: "error",
+                  title: " עליך להתחבר כדי להצטרף לאתגר.", 
+                  showConfirmButton: false,
+                  timer: 3000 // 3 שניות
+                });
         } else {
           alert(`שגיאה בהצטרפות: ${errorMessage}`);
         }

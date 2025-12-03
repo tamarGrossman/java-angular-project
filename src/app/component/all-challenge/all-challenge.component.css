@@ -157,6 +157,7 @@
     gap: 20px;
     align-items: flex-start;
     margin-bottom: 20px;
+    
 }
 
 .challenge-picture-container {
@@ -178,6 +179,13 @@
     flex-grow: 1;
     line-height: 1.7;
     font-size: 1.15em;
+    white-space: pre-wrap;
+    display: -webkit-box; /* 1. מאפשר שימוש במנגנון הקיטום של Webkit */
+    -webkit-box-orient: vertical; /* 2. מנחה את הקיטום להיות אנכי */
+    -webkit-line-clamp: 8; /* 3. המגבלה - רק 8 שורות! */
+    overflow: hidden; /* 4. מסתיר את מה שמעבר ל-8 שורות */
+    text-overflow: ellipsis; 
+    
 }
 
 .challenge-footer {

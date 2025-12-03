@@ -109,3 +109,32 @@
 .challenge-card button:hover {
   background-color: #084298;
 }
+/* ✅ סגנונות חדשים עבור ה-hero */
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* 🎯 שימוש בתמונה כרקע עם הנתיב המוחלט */
+    background-image: url('../../../assets/image\ \(7\).png');
+    
+    /* ✅ מתיחת התמונה למילוי כל האזור */
+    background-size: cover; 
+    
+    /* ✅ מיקום התמונה במרכז */
+    background-position: center center; 
+    
+    /* ✅ מניעת חזרות של התמונה */
+    background-repeat: no-repeat; 
+  
+    /* הגדרת גובה סביר לבאנר כדי שנוכל לראות את התמונה */
+    height: 35vh; /* 35% מגובה המסך */
+    min-height: 450px; 
+    
+    /* איפוס סגנונות שהפריעו */
+    padding: 0;
+    border-bottom: none;
+    background-color: white; /* רק לוודא שאין צבע רקע אחר */
+  }
+  
+  /* ודא שאין קוד CSS עבור .hero-image */
