@@ -3,15 +3,11 @@
     
     @if (currentUsername) {
         <p class="welcome-message">
-            שלום, **{{ currentUsername }}**! ברוך הבא לאזור הפרופיל שלך.
+            שלום , {{ currentUsername }} 
         </p>
     }
     
-    @if (currentUsername) {
-        <p class="welcome-message">
-            שלום, **{{ currentUsername }}**! ברוך הבא לאזור הפרופיל שלך.
-        </p>
-    }
+   
     
     @if (isLoading) {
        <div class="loading-message">טוען...</div>
