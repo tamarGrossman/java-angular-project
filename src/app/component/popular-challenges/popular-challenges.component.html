@@ -1,62 +1,71 @@
 <div class="popular-section">
-  <h2 class="section-title">אתגרים פופולריים כרגע</h2>
+    <h2 class="section-title">אתגרים פופולריים </h2>
 
-  @if (isLoading) {
-    <div class="loading">טוען אתגרים פופולריים...</div>
-  }
+    @if (isLoading) {
+        <div class="loading">טוען אתגרים פופולריים...</div>
+    }
 
-  <div class="carousel-container">
+    <div class="carousel-container">
 
-    <div class="carousel-track"
-         [style.transform]="'translateX(-' + (currentIndex * (100 / itemsToShow)) + '%)'">
+        <div class="carousel-track"
+            [style.transform]="'translateX(-' + (currentIndex * (100 / itemsToShow)) + '%)'">
 
-      @for (challenge of popularChallenges; track challenge.id) {
-        <div class="carousel-slide" [style.width.%]="100 / itemsToShow">
+            @for (challenge of popularChallenges; track challenge.id) {
+                <div class="carousel-slide" [style.width.%]="100 / itemsToShow">
 
-          <div class="modern-card" [routerLink]="['/challenge', challenge.id]">
+                    <div class="modern-card" [routerLink]="['/challenge', challenge.id]">
 
-            @if (challenge.picture) {
-              <div class="card-image">
-                <img [src]="'data:image/jpeg;base64,' + challenge.picture" 
-                     alt="{{challenge.name}}" />
-              </div>
-            } 
+                        @if (challenge.picture && challenge.picture.length > 100) {
+                            <div class="card-image">
+                                <img 
+                                    [src]="challenge.picture" 
+                                    [alt]="'תמונת אתגר: ' + challenge.name" 
+                                    class="challenge-image"
+                                /> 
+                                <span class="days-badge">{{ challenge.numOfDays }} ימים</span> 
+                            </div>
+                        } @else {
+                            <div class="no-image-placeholder">
+                                <span class="placeholder-icon">🗓️</span>
+                               <h3>{{ challenge.numOfDays }}</h3>    <h3>ימים</h3> 
+                                </div>
+                        } 
 
-            <div class="card-content">
-              <h3 class="card-title">{{ challenge.name }}</h3>
-              <p class="card-description">{{ challenge.description | slice:0:75 }}...</p>
+                        <div class="card-content">
+                            <h3 class="card-title">{{ challenge.name }}</h3> 
+                            <p class="card-description">{{ challenge.description | slice:0:75 }}...</p>
 
-              <div class="card-footer">
-                <div class="date-info">
-                  <span class="start-date">הועלה ב- {{ challenge.date | date:'dd.MM' }}</span>
+                            <div class="card-footer">
+                                <div class="date-info">
+                                    <span class="start-date">הועלה ב- {{ challenge.date | date:'dd.MM' }}</span>
+                                </div>
+
+                                <div class="likes-info">
+                                    <span class="heart">❤️</span>
+                                    <strong>{{ challenge.likeCount }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+            }
 
-                <div class="likes-info">
-                  <span class="heart">❤️</span>
-                  <strong>{{ challenge.likeCount }}</strong>
+            @for (i of emptySlides(); track i) {
+                <div class="carousel-slide" [style.width.%]="100 / itemsToShow">
+                    <div class="modern-card dummy-card"></div>
                 </div>
-              </div>
-            </div>
-          </div>
+            }
 
         </div>
-      }
 
-      <!-- מילוי ריק אם יש פחות מ-itemsToShow כדי שלא יהיה חלל -->
-      @for (i of emptySlides(); track i) {
-        <div class="carousel-slide" [style.width.%]="100 / itemsToShow">
-          <div class="modern-card dummy-card"></div>
+        <button class="nav-btn prev" (click)="prev()" [disabled]="currentIndex === 0">‹</button>
+        <button class="nav-btn next" (click)="next()" [disabled]="currentIndex >= maxIndex()">›</button>
+        
+        <div class="dots">
+            @for (n of getDots(); track $index) {
+                <span class="dot" [class.active]="currentIndex === $index" (click)="goToSlide($index)"></span>
+            }
         </div>
-      }
-
     </div>
-
-    <button class="nav-btn prev" (click)="prev()" [disabled]="currentIndex === 0">‹</button>
-<button class="nav-btn next" (click)="next()" [disabled]="currentIndex >= maxIndex()">›</button>
-    <div class="dots">
-      @for (n of getDots(); track $index) {
-        <span class="dot" [class.active]="currentIndex === $index" (click)="goToSlide($index)"></span>
-      }
-    </div>
-  </div>
 </div>

@@ -35,28 +35,37 @@ export class PopularChallengesComponent implements OnInit, OnDestroy {
     if (this.autoPlayInterval) clearInterval(this.autoPlayInterval);
   }
 
-  loadPopularChallenges(): void {
-    this.challengeService.getPopularChallenges(12).subscribe({
-      next: (data: any[]) => {
-        this.popularChallenges = data.map((c: any) => ({
+loadPopularChallenges(): void {
+  this.challengeService.getPopularChallenges(12).subscribe({
+    next: (data: any[]) => {
+      this.popularChallenges = data.map((c: any) => {
+        // 🎯 הוספת בדיקה והדפסה לקונסול:
+        if (c.picture && c.picture.length > 10) {
+            console.log(`Challenge ${c.id}: Picture length: ${c.picture.length} (OK)`);
+        } else {
+            console.warn(`Challenge ${c.id}: Picture is missing or too short!`);
+        }
+          
+        return {
           id: c.id,
           name: c.name,
           description: c.description,
           date: c.date,
           numOfDays: c.numOfDays,
-          picture: c.picture,
+          picture: c.picture, // שומרים את השדה כפי שהוא
           likeCount: c.likedByUserIds
             ? c.likedByUserIds.split(',').filter((id: string) => id.trim() !== '').length
             : 0
-        }));
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('שגיאה בטעינת אתגרים פופולריים', err);
-        this.isLoading = false;
-      }
-    });
-  }
+        };
+      });
+      this.isLoading = false;
+    },
+    error: (err) => {
+      console.error('שגיאה בטעינת אתגרים פופולריים', err);
+      this.isLoading = false;
+    }
+  });
+}
 
   updateItemsToShow(): void {
     if (window.innerWidth < 600) this.itemsToShow = 1;
