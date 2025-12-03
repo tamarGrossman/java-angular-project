@@ -1,0 +1,135 @@
+/* ------------------------------------------- */
+/* 1. עיצוב כללי לקונטיינר הראשי וטקסט (USER COMMENTS) */
+/* ------------------------------------------- */
+.user-comments-container {
+    max-width: 1000px; 
+    /* מרכוז הקונטיינר הראשי */
+    margin: 40px auto 0 auto; 
+    /* פדינג עליון כדי לדחוף מתחת לנאב בר */
+    padding: 100px 15px 20px 15px; 
+    direction: rtl; /* יישור לימין לעברית */
+    font-family: 'Arial', sans-serif;
+}
+
+.component-title {
+    color: #3f51b5; /* כחול עמוק לכותרת */
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 0; 
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+/* ------------------------------------------- */
+/* 2. עיצוב רשימת התגובות (הרשת - Grid) */
+/* ------------------------------------------- */
+.comments-list {
+    display: grid;
+    /* הגדרת 2-3 עמודות גמישות */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    /* ✅ הגדלנו את הרווח בין הכרטיסים מ-25px ל-40px */
+    gap: 40px; 
+    justify-content: center; 
+}
+/* התאמה למסכים קטנים */
+@media (max-width: 768px) {
+    .comments-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ------------------------------------------- */
+/* 3. עיצוב כרטיס התגובה הבודד (הקישור A) */
+/* ------------------------------------------- */
+.comment-card-link {
+    display: block; 
+    text-decoration: none; /* הסרת קו תחתון */
+    color: inherit; /* ירושת צבע טקסט */
+    
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* אפקט ריחוף */
+.comment-card-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ------------------------------------------- */
+/* 4. עיצוב התוכן הפנימי של הכרטיס (DIV) */
+/* ------------------------------------------- */
+.comment-card {
+    padding: 20px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+}
+
+/* ------------------------------------------- */
+/* 5. עיצוב תוכן התגובה */
+/* ------------------------------------------- */
+.comment-text {
+    color: #495057;
+    font-size: 1rem;
+    font-style: italic;
+    margin-bottom: 15px;
+    line-height: 1.5; 
+    /* קו צד להדגשה - נותן תחושת 'בלוק ציטוט' */
+    border-right: 3px solid #ff9800; 
+    padding-right: 10px;
+    flex-grow: 1; /* מאפשר לתוכן התגובה למלא את הגובה */
+}
+
+/* ------------------------------------------- */
+/* 6. עיצוב פרטי האתגר והתאריך (FOOTER) */
+/* ------------------------------------------- */
+.comment-stats {
+    display: flex;
+    flex-direction: column; /* הצגה בשורות נפרדות */
+    padding-top: 10px;
+    border-top: 1px dashed #e9ecef;
+    margin-top: auto; /* דוחף את הפוטר לתחתית הכרטיס */
+}
+
+.stat-item {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+.stat-item strong {
+    font-weight: 700;
+}
+
+.stat-item.challenge-name {
+    color: #3f51b5; /* צבע כחול לאתגר */
+    font-weight: 600;
+}
+
+/* ------------------------------------------- */
+/* 7. עיצוב מצבי ריק, טעינה ושגיאה */
+/* ------------------------------------------- */
+.loading-state, .error-state, .empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    font-size: 1.2rem;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 30px;
+}
+.error-message {
+    color: #dc3545;
+    font-weight: bold;
+}
+.error-state {
+    border: 1px solid #dc3545;
+    background-color: #f8d7da;
+    color: #721c24;
+}

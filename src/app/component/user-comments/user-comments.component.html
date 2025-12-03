@@ -1,40 +1,49 @@
 <div class="user-comments-container">
-    <h2>📝 התגובות שלי</h2>
+    <h1 class="component-title">📝 התגובות שלי</h1>
 
     @if (isLoading) {
-        <div class="loading-message">
+        <div class="loading-state">
             <p>טוען תגובות, אנא המתן...</p>
         </div>
     }
 
     @if (error) {
-        <div class="error-message">
-            <p><strong>שגיאה!</strong> {{ error }}</p>
+        <div class="error-state">
+            <p class="error-message">❌ <strong>שגיאה!</strong> {{ error }}</p>
         </div>
     }
 
     @if (!isLoading && userComments.length > 0) {
-        <ul class="comments-list">
+        <div class="comments-list">
             @for (comment of userComments; track comment.id) {
-                <li class="comment-item"
-                    (click)="navigateToChallengeDetails(comment.challengeId)"> 
-                    
-                    <div class="comment-content">
-                        <p>{{ comment.content }}</p>
+                <a [routerLink]="['/challenge', comment.challengeId]" 
+                   class="comment-card-link" 
+                   title="מעבר לאתגר: {{ comment.challengeName }}"
+                   (click)="$event.preventDefault(); navigateToChallengeDetails(comment.challengeId)"> 
+                   
+                    <div class="comment-card">
+                        
+                        <div class="comment-content">
+                            <p class="comment-text">{{ comment.content }}</p>
+                        </div>
+                        
+                        <div class="comment-stats">
+                            <span class="stat-item challenge-name">
+                                🔗 <span class="label">אתגר:</span> {{ comment.challengeName }} 
+                            </span>
+                            <span class="stat-item date">
+                                🗓️ <span class="label">פורסם:</span> {{ comment.date | date: 'dd/MM/yyyy' }}
+                            </span>
+                        </div>
                     </div>
-                    
-                    <div class="comment-footer">
-                        <small>פורסם בתאריך: {{ comment.date | date: 'dd/MM/yyyy' }}</small>
-                        <span class="view-link">צפה בפרטי האתגר ⬅️</span>
-                    </div>
-                </li>
+                </a>
             }
-        </ul>
+        </div>
     }
 
     @if (!isLoading && userComments.length === 0 && !error) {
-        <div class="no-content">
-            <p>לא נמצאו תגובות עבור משתמש זה.</p>
+        <div class="empty-state">
+            <p>לא נמצאו תגובות עבור משתמש זה. 🤫</p>
         </div>
     }
 </div>

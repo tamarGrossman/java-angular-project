@@ -54,4 +54,3 @@ navigateToDetails(id: number | undefined) {
     }
   }
 }
-

@@ -1,5 +1,5 @@
 /* ------------------------------------------- */
-/* 1. מיכל ראשי וכותרת */
+/* 1. מיכל ראשי וכותרת - הכללים הקיימים/מעודכנים */
 /* ------------------------------------------- */
 .profile-container {
     max-width: 900px;
@@ -12,23 +12,38 @@
     text-align: center;
 }
 
-.profile-container h2 {
-    color: #007bff; /* כחול - צבע מותג */
+/* הכלל הישן .profile-container h2 הוחלף ב- .profile-title */
+.profile-title { 
+    color: #3f51b5; /* כחול עמוק */
+    font-size: 2.5rem; 
+    font-weight: 700;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #b3d9ff;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+
+/* הכלל הישן .profile-container h2 נמחק - אם יש לו שימוש אחר צריך להחזיר */
+/* .profile-container h2 {
+    color: #007bff;
     font-size: 2.2rem;
     margin-bottom: 30px;
     border-bottom: 3px solid #b3d9ff;
     padding-bottom: 15px;
-}
+} */
 
+/* הכלל הישן .user-id-display הוסר מה-HTML ולכן הכלל הזה פחות רלוונטי */
 .user-id-display {
     color: #6c757d; /* אפור כהה */
     margin-bottom: 25px;
     font-size: 1rem;
     font-weight: 500;
+    display: none; /* הסתרת הכלל הזה אם קיים */
 }
 
 /* ------------------------------------------- */
-/* 2. רשת הכפתורים (Actions Grid) */
+/* 2. רשת הכפתורים (Actions Grid) - הכללים הקיימים */
 /* ------------------------------------------- */
 .actions-grid {
     display: grid;
@@ -46,7 +61,7 @@
 }
 
 /* ------------------------------------------- */
-/* 3. כפתור/קישור פרופיל בודד (A) */
+/* 3. כפתור/קישור פרופיל בודד (A) - הכללים הקיימים */
 /* ------------------------------------------- */
 .profile-button {
     display: block;
@@ -77,10 +92,8 @@
 }
 
 /* ------------------------------------------- */
-/* 4. צבעים ספציפיים לכפתורים */
+/* 4. צבעים ספציפיים לכפתורים - הכללים הקיימים */
 /* ------------------------------------------- */
-
-/* אתגרים שיצרתי (כלי עבודה / יצירה) */
 .created-challenges {
     background-color: #e6f7e8; /* ירוק בהיר */
     border-left: 5px solid #28a745; /* ירוק חזק */
@@ -88,8 +101,6 @@
 .created-challenges:hover {
     background-color: #d6f0d9;
 }
-
-/* אתגרים שהשתתפתי בהם (שיתוף / קהילה) */
 .joined-challenges {
     background-color: #e6f7ff; /* כחול בהיר */
     border-left: 5px solid #007bff; /* כחול חזק */
@@ -97,8 +108,6 @@
 .joined-challenges:hover {
     background-color: #d6f0ff;
 }
-
-/* התגובות שלי (דיבור / טקסט) */
 .user-comments {
     background-color: #fff9e6; /* צהוב/כתום בהיר */
     border-left: 5px solid #ffc107; /* צהוב/כתום חזק */
@@ -108,7 +117,7 @@
 }
 
 /* ------------------------------------------- */
-/* 5. הודעות סטטוס (טעינה) */
+/* 5. הודעות סטטוס (טעינה) - הכללים הקיימים */
 /* ------------------------------------------- */
 .loading-message {
     text-align: center;
@@ -116,4 +125,26 @@
     font-size: 1.5rem;
     color: #007bff;
     font-weight: bold;
+}
+
+/* ------------------------------------------- */
+/* 6. תוספות נדרשות - עיצוב הברכה החדשה */
+/* ------------------------------------------- */
+
+.greeting {
+    font-size: 1.8rem; /* גודל גופן גדול */
+    font-weight: 900; /* הדגשת גופן מקסימלית */
+    color: #15110f; /* צבע כתום-חם (מושך את העין) */
+    margin-bottom: 35px; /* מרווח מתחת */
+    text-align: center;
+    
+    /* הסרת כל מאפייני ה"ריבוע" */
+    padding: 0; 
+    background: none; 
+    border-radius: 0; 
+    box-shadow: none;
+    width: auto;
+    
+    /* הוספת צל טקסט עדין אך בולט */
+    text-shadow: 1px 1px 3px rgba(233, 102, 21, 0.5); 
 }

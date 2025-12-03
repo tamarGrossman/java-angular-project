@@ -1,101 +1,91 @@
-/* ------------------------------------------- */
-/* 1. מיכל ראשי וכותרת */
-/* ------------------------------------------- */
+/* joined-challenges.component.css */
+
+/* ------------------ כללי ------------------ */
+
 .joined-challenges-container {
-    max-width: 800px;
-    margin: 40px auto;
+    /* הגבלת רוחב למראה נקי יותר במרכז המסך */
+    max-width: 700px;
+    margin: 30px auto;
     padding: 20px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    direction: rtl; /* יישור לימין לעברית */
+    /* כיווניות מימין לשמאל (RTL) עבור עברית */
+    direction: rtl; 
+    font-family: Arial, sans-serif;
 }
 
-.joined-challenges-container h3 {
+h2 {
     text-align: center;
-    color: #007bff; /* כחול בהיר - צבע מותג של כושר */
-    font-size: 1.8rem;
+    color: #1abc9c; /* ירוק רענן - צבע שיכול להתאים לאתגרים והתקדמות */
+    font-size: 2em;
     margin-bottom: 25px;
+    border-bottom: 3px solid #e0e0e0;
     padding-bottom: 10px;
-    border-bottom: 2px solid #f0f0f0;
 }
 
-/* ------------------------------------------- */
-/* 2. רשימת האתגרים (UL) */
-/* ------------------------------------------- */
+/* ------------------ רשימת אתגרים ------------------ */
+
 .challenge-list {
-    list-style: none; /* הסרת תבליטים */
+    list-style: none;
     padding: 0;
-    margin: 0;
 }
 
-/* ------------------------------------------- */
-/* 3. פריט אתגר בודד (LI) */
-/* ------------------------------------------- */
 .challenge-item {
-    display: flex;
-    justify-content: space-between; /* יישור שם הקישור לימין */
+    /* נשתמש ב-Flexbox כדי ליישר דברים (גם אם כרגע יש רק קישור) */
+    display: flex; 
     align-items: center;
-    padding: 15px 20px;
-    margin-bottom: 10px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    border-right: 5px solid #007bff; /* פס הדגשה צדדי */
-}
-
-/* אפקט ריחוף */
-.challenge-item:hover {
-    background-color: #f0f8ff; /* כחול בהיר מאוד בריחוף */
-    transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-/* ------------------------------------------- */
-/* 4. קישור לאתגר (A) */
-/* ------------------------------------------- */
-.challenge-link {
-    text-decoration: none; /* הסרת קו תחתון מקישור */
-    color: #333; /* צבע טקסט רגיל */
-    font-size: 1.1rem;
-    font-weight: 600;
+    justify-content: space-between;
+    
+    /* מראה של כרטיס נקי */
+    background-color: #ffffff;
+    border: 1px solid #f0f0f0;
+    margin-bottom: 12px;
+    padding: 18px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* צל עדין */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
-    flex-grow: 1; /* מאפשר לקישור לתפוס את כל הרוחב הזמין */
-    text-align: right;
-    display: block; /* כדי להחיל padding/margin עליו */
 }
 
-/* אפקט ריחוף על שם האתגר */
-.challenge-link:hover .challenge-name {
-    color: #0056b3; /* צבע כחול כהה יותר בריחוף */
-    text-decoration: underline;
+.challenge-item:hover {
+    /* אפקט ריחוף (Hover) לשיפור חוויית המשתמש */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
 }
 
-/* ------------------------------------------- */
-/* 5. הודעות סטטוס (טעינה/שגיאה/אין אתגרים) */
-/* ------------------------------------------- */
-.loading-message,
-.error-message,
-.no-challenges {
+.challenge-link {
+    /* הקישור הוא כל האזור של שם האתגר */
+    text-decoration: none;
+    color: #333333;
+    font-size: 1.2em;
+    font-weight: 600; /* הדגשה יפה */
+    /* שימוש בפס ירוק קטן ליד שם האתגר */
+    border-right: 4px solid #1abc9c;
+    padding-right: 15px;
+    line-height: 1.4;
+}
+
+.challenge-name {
+    /* אם יש צורך בעיצוב נוסף לשם */
+    display: block; 
+}
+
+/* ------------------ הודעות סטטוס ------------------ */
+
+.error-message, .no-challenges-message {
     text-align: center;
     padding: 20px;
+    margin-top: 30px;
     border-radius: 8px;
-    margin-top: 20px;
-}
-
-.loading-message p {
-    color: #007bff;
-    font-weight: bold;
+    font-size: 1.1em;
 }
 
 .error-message {
-    background-color: #fff0f0;
-    color: #dc3545;
-    border: 1px solid #dc3545;
+    color: #D32F2F; /* אדום לשגיאה */
+    background-color: #FFEBEE;
+    border: 1px solid #FFCDD2;
 }
 
-.no-challenges {
-    background-color: #f4f4f4;
-    color: #666;
-    font-style: italic;
+.no-challenges-message {
+    color: #795548; /* צבע אדמה */
+    background-color: #FFFDE7;
+    border: 1px solid #FFF9C4;
 }

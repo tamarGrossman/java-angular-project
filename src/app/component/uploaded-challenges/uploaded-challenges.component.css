@@ -1,0 +1,159 @@
+/* ------------------------------------------- */
+/* 1. עיצוב כללי לכל הקומפוננטה - תיקון גובה הנאב בר */
+/* ------------------------------------------- */
+.uploaded-challenges-container {
+    max-width: 1000px; 
+    margin: 40px auto 0 auto; /* שיניתי את המרווח העליון ל-0 */
+    /* **התיקון כאן: הוספת מרווח עליון גדול כדי לפצות על הנאב בר** */
+    padding: 100px 15px 20px 15px; 
+    direction: rtl;
+    font-family: 'Arial', sans-serif;
+}
+
+.component-title {
+    color: #007bff;
+    font-size: 2rem;
+    text-align: center;
+    /* הסרת המרווח העליון כי ה-padding בקונטיינר הראשי דוחף אותו */
+    margin-top: 0; 
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+/* ------------------------------------------- */
+/* 2. עיצוב רשימת האתגרים (הרשת) */
+/* ------------------------------------------- */
+.challenges-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 25px;
+    justify-content: center; 
+}
+
+/* התאמה למסכים קטנים - טור אחד */
+@media (max-width: 768px) {
+    .challenges-list {
+        grid-template-columns: 1fr;
+        padding: 0 10px; 
+    }
+}
+
+/* ------------------------------------------- */
+/* 3. עיצוב כרטיס האתגר הבודד (Card) - לחיץ */
+/* ------------------------------------------- */
+.challenge-card {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    
+    position: relative; 
+    cursor: pointer; 
+}
+
+.challenge-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ------------------------------------------- */
+/* 4. הקישור המוחלט שמכסה את כל הכרטיס */
+/* ------------------------------------------- */
+.card-overlay-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10; 
+    text-decoration: none; 
+    color: transparent;
+}
+
+
+/* ------------------------------------------- */
+/* 5. עיצוב התוכן הפנימי של הכרטיס */
+/* ------------------------------------------- */
+.challenge-name {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #3f51b5; 
+    transition: color 0.2s;
+}
+
+/* שינוי בצבע הכותרת בריחוף */
+.challenge-card:hover .challenge-name {
+    color: #ff9800;
+}
+
+/* **אכיפת שורה אחת לתיאור עם 3 נקודות** */
+.challenge-description {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    flex-grow: 1;
+    
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+/* ------------------------------------------- */
+/* 6. עיצוב סטטיסטיקות (לייקים ותאריך) */
+/* ------------------------------------------- */
+.challenge-stats {
+    display: flex;
+    justify-content: space-between; 
+    padding-top: 10px;
+    border-top: 1px solid #f8f9fa;
+    margin-top: auto;
+}
+
+.stat-item {
+    font-size: 0.9rem;
+    font-weight: normal; 
+    color: #495057;
+}
+
+.stat-item.likes {
+    color: #dc3545; 
+    font-weight: 600; 
+}
+
+/* ------------------------------------------- */
+/* 7. עיצוב מצבי ריק, טעינה ושגיאה */
+/* ------------------------------------------- */
+.empty-state, .loading-state, .error-state {
+    text-align: center;
+    padding: 50px 20px;
+    font-size: 1.2rem;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 30px;
+}
+.error-message {
+    color: #dc3545;
+    font-weight: bold;
+}
+.create-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.create-link:hover {
+    background-color: #218838;
+}
