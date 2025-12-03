@@ -75,6 +75,7 @@ export class SigninComponent {
       // 4. כישלון:
       error: (err) => {
         console.error('שגיאה בהתחברות:', err);
+
         // ... (טיפול בשגיאות נשאר כפי שהיה)
         if (err.status === 403 || err.status === 401) {
           this.message = 'שם המשתמש או הסיסמה שגויים';

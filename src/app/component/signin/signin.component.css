@@ -136,3 +136,28 @@ small {
     color: #198754;
     margin-bottom: 10px;
 }
+.validation-error {
+ color: #dc3545; /* אדום */
+font-size: 0.85rem;
+ margin-top: 5px;
+}
+
+.validation-error p {
+ margin: 0;
+}
+
+/* ⭐ עיצוב רכיבי קלט לא תקינים - מוסיף מסגרת אדומה ⭐ */
+input.ng-invalid.ng-touched {
+ border: 1px solid #dc3545; /* מסגרת אדומה לשדות שנכשלו */
+}
+
+/* עיצוב הודעות שגיאה שהגיעו מהשרת */
+.error-message {
+    color: #dc3545; 
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid #dc3545;
+    background-color: #f8d7da;
+    border-radius: 4px;
+}
+

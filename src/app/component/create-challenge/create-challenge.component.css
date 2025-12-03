@@ -200,3 +200,24 @@ button[type="submit"]:disabled {
     flex-grow: 1; /* יתפוס את השטח שנותר ליד הכפתור */
     min-width: 150px;
 }
+/* עיצוב הודעות שגיאה */
+.validation-error {
+    color: #dc3545; /* אדום */
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+.validation-error p {
+    margin: 0;
+}
+
+/* עיצוב רכיבי קלט לא תקינים */
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+    border: 1px solid #dc3545; /* מסגרת אדומה לשדות שנכשלו */
+}
+input[type="text"].ng-invalid.ng-touched,
+input[type="number"].ng-invalid.ng-touched, /* ✅ נוסף: שדה מספר ימים */
+textarea.ng-invalid.ng-touched {
+border: 1px solid #dc3545; /* מסגרת אדומה לשדות שנכשלו */
+}

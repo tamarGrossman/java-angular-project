@@ -1,52 +1,76 @@
 <div class="comment-form-container">
-    <h4>הוספת תגובה</h4>
+    <h4>הוספת תגובה</h4>
 
-        <textarea
-        [(ngModel)]="commentContent"
-        name="commentContent"
-        rows="4"
-        placeholder="כתוב את התגובה שלך כאן..."
-        [disabled]="isLoading"
-    ></textarea>
+    <form #commentForm="ngForm" (ngSubmit)="submitComment()">
+        
+        <textarea
+            [(ngModel)]="commentContent"
+            name="commentContent"
+            rows="4"
+            placeholder="כתוב את התגובה שלך כאן..."
+            [disabled]="isLoading"
+            
+            minlength="1" 
+            maxlength="500"
+            required
+            #contentControl="ngModel"
+        ></textarea>
 
-    <div class="file-input-group">
-                <label 
-            for="fileInput" 
-            class="custom-file-upload"
-            [ngClass]="{'file-selected': selectedFile}" 
-        >
-            <span class="file-label-text">בחר תמונה:</span>
-                        <span class="file-input-button">
-                @if (selectedFile) {
-                    ✅ קובץ נבחר
-                } @else {
-                    בחר קובץ...
+        @if (contentControl.invalid && contentControl.touched) {
+            <div class="validation-error">
+                @if (contentControl.errors?.['minlength']) {
+                    <p>אורך התגובה חייב להיות לפחות 1 תו.</p>
                 }
-            </span> 
-        </label>
-        
-                <input 
-            type="file" 
-            id="fileInput" 
-            (change)="onFileSelected($event)" 
-            accept="image/*"
-            [disabled]="isLoading"
-        >
-    </div>
+                @if (contentControl.errors?.['maxlength']) {
+                    <p>אורך התגובה המקסימלי הוא 500 תווים.</p>
+                }
+                @if (contentControl.errors?.['required']) {
+                    <p>התגובה לא יכולה להיות ריקה.</p>
+                }
+            </div>
+        }
+        
+        <div class="file-input-group">
+            <label 
+                for="fileInput" 
+                class="custom-file-upload"
+                [ngClass]="{'file-selected': selectedFile}" 
+            >
+                <span class="file-label-text">בחר תמונה:</span>
+                <span class="file-input-button">
+                    @if (selectedFile) {
+                        ✅ קובץ נבחר
+                    } @else {
+                        בחר קובץ...
+                    }
+                </span> 
+            </label>
+            
+            <input 
+                type="file" 
+                id="fileInput" 
+                (change)="onFileSelected($event)" 
+                accept="image/*"
+                [disabled]="isLoading"
+            >
+        </div>
 
-    <button 
-        (click)="submitComment()" 
-        [disabled]="isLoading || !commentContent.trim()"     >
-                @if (isLoading) {
-            שולח...
-        } @else {
-            שלח תגובה
-        }
-    </button>
-
-    @if (message) {
-        <p [class]="isError ? 'error-message' : 'success-message'">
-            {{ message }}
-        </p>
-    }
+        <button 
+            type="submit" 
+            [disabled]="isLoading || commentForm.invalid" 
+        >
+            @if (isLoading) {
+                שולח...
+            } @else {
+                שלח תגובה
+            }
+        </button>
+        
+    </form>
+    
+    @if (message) {
+        <p [class]="isError ? 'error-message' : 'success-message'">
+            {{ message }}
+        </p>
+    }
 </div>

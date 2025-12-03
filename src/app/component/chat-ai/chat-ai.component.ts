@@ -22,7 +22,7 @@ messages: Message[] = [];
   currentBotMessageIndex: number = -1; // אינדקס להודעת הבוט הנוכחית שנבנית
 
   constructor(private chatService: ChatService) { 
-    this.messages.push({ content: 'שלום! אני הבוט האישי שלך, מתמחה בכושר, תזונה ובריאות. במה אוכל לעזור לך?', isUser: false });
+    this.messages.push({ content: " היי! אני ה-AI שלך בתחום כושר, תזונה ובריאות. אם אתה מתלבט איזה אתגר לבחור, שתף אותי במטרות ובשאיפות שלך ואני אכוון אותך לאתגר המושלם. כמובן, אני כאן גם לכל שאלה אחרת!", isUser: false });
   }
 
   sendMessage(): void {

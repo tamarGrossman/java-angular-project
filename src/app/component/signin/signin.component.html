@@ -1,6 +1,6 @@
 <div class="form-container">
 
-    <div *ngIf="!isLoggedIn">
+    @if (!isLoggedIn) {
         <h2>התחברות לאתר 🔑</h2>
         
         <form #loginForm="ngForm" (ngSubmit)="signin()">
@@ -14,11 +14,24 @@
                         name="username"
                         [(ngModel)]="user.username"
                         required
+                        minlength="1"  
+                        maxlength="30" 
                         #usernameInput="ngModel">
                         
-                    <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)">
-                        <small *ngIf="usernameInput.errors?.['required']">שדה חובה.</small>
-                    </div>
+                    @if (usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)) {
+                        <div class="validation-error-message">
+                            
+                            @if (usernameInput.errors?.['required']) {
+                                <small>חובה להכניס שם משתמש.</small>
+                            }
+                            
+                            @if (usernameInput.errors?.['minlength'] || usernameInput.errors?.['maxlength']) {
+                                <small>
+                                    אורך שם המשתמש חייב להיות בין 1 ל-30 תווים.
+                                </small>
+                            }
+                        </div>
+                    }
                 </div>
             </div>
 
@@ -31,26 +44,42 @@
                         name="password"
                         [(ngModel)]="user.password"
                         required
+                        minlength="4"  
+                        maxlength="10" 
                         #passwordInput="ngModel">
                         
-                    <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)">
-                        <small *ngIf="passwordInput.errors?.['required']">שדה חובה.</small>
-                    </div>
+                    @if (passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)) {
+                        <div class="validation-error-message">
+                            
+                            @if (passwordInput.errors?.['required']) {
+                                <small>חובה להכניס סיסמה.</small>
+                            }
+                            
+                            @if (passwordInput.errors?.['minlength'] || passwordInput.errors?.['maxlength']) {
+                                <small>
+                                    אורך הסיסמה חייב להיות בין 4 ל-10 תווים.
+                                </small>
+                            }
+                        </div>
+                    }
                 </div>
             </div>
 
             <button type="submit" [disabled]="!loginForm.form.valid">התחבר</button>
         </form>
-    </div>
+    }
     
-    <div *ngIf="message" class="message">
-        {{ message }}
-    </div>
+    @if (message) {
+        <div class="message">
+            {{ message }}
+        </div>
+    }
 
-    <div class="success-state" *ngIf="isLoggedIn && currentUsername && !message.startsWith('התחברת בהצלחה!')">
-        <h3>🎉 ברוך הבא לאתר!</h3>
-        <p>הנך כבר מחובר, שלום {{ currentUsername }}</p> 
-        <p>אנו שמחים לראותך שוב.</p>
-    </div>
-
+    @if (isLoggedIn && currentUsername && !message.startsWith('התחברת בהצלחה!')) {
+        <div class="success-state">
+            <h3>🎉 ברוך הבא לאתר!</h3>
+            <p>הנך כבר מחובר, שלום {{ currentUsername }}</p> 
+            <p>אנו שמחים לראותך שוב.</p>
+        </div>
+    }
 </div>
