@@ -1,5 +1,11 @@
 <div class="profile-container">
-    <h2>👤 אזור הפרופיל שלי</h2>
+    <h2>  הפרופיל שלי</h2>
+    
+    @if (currentUsername) {
+        <p class="welcome-message">
+            שלום, **{{ currentUsername }}**! ברוך הבא לאזור הפרופיל שלך.
+        </p>
+    }
     
     @if (currentUsername) {
         <p class="welcome-message">
@@ -11,7 +17,6 @@
        <div class="loading-message">טוען...</div>
     } 
     @else {
-        <p class="user-id-display">מזהה המשתמש הנוכחי: {{ currentUserId }}</p>
 
         <div class="actions-grid">
             

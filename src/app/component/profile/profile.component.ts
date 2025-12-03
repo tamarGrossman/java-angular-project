@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Users } from '../../models/users.model';
-// 💡 ייבוא ה-Service
+import { Users } from '../../models/users.model'; // ✅ ודאי שהנתיב למודל נכון
 import { usersService } from '../../service/users.service'; 
 import { Subscription } from 'rxjs'; // ✅ לניהול ה-Subscription
 
 @Component({
   selector: 'app-profile',
   standalone: true,
+  // ייבוא RouterLink עבור קישורים ב-HTML ו-CommonModule עבור מבני בקרה
   imports: [RouterLink, CommonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
@@ -18,14 +18,10 @@ import { Subscription } from 'rxjs'; // ✅ לניהול ה-Subscription
 export class ProfileComponent implements OnInit{
   currentUserId: number| null = null; 
   isLoading: boolean = true;
-  // 💡💡💡 משתנה חדש לשמירת שם המשתמש
   currentUsername: string | null = null; 
-  private subscription!: Subscription; // לניהול ה-subscription
-
-  currentUser: Users | null = null;
-  // 💡 הזרקת ה-Service
-  constructor(private router: Router, private userService: usersService) { } 
-  
+  private subscription!: Subscription;
+currentUser: Users | null = null;
+  constructor(private router: Router, private userService: usersService) { }
   ngOnInit(): void {
     // 💡💡💡 שינוי קריטי: הרשמה ל-currentUser$
     this.subscription = this.userService.currentUser$.subscribe(username => {
@@ -51,5 +47,8 @@ export class ProfileComponent implements OnInit{
     }
   }
 
-  // ... (שאר הקוד נשאר כפי שהיה)
+  /**
+   * פונקציית ניווט כללית לפי נתיב.
+   * @param routePath הנתיב הבסיסי לניווט (למשל, 'my-challenges')
+   */
 }

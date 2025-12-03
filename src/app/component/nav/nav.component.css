@@ -33,6 +33,7 @@
   text-align: center; 
   white-space: nowrap; 
   margin-bottom: 8px;
+  
   flex-shrink: 0;
 }
 
