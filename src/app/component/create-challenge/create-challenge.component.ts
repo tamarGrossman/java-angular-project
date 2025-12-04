@@ -18,12 +18,11 @@ export class CreateChallengeComponent {
     name: '',
     userName:'',
     description: '',
-    date: new Date(), // ערך ברירת מחדל
+    date: new Date(), 
     numOfDays: 0,
     userId: 0,
     likeCount: 0,
     isLikedByCurrentUser: false
-   // **חשוב:** החלף ב-ID המשתמש האמיתי שצריך להגיע מהלוגין/אפליקציה
   };
   selectedFile: File | null = null;
   uploading = false;
@@ -32,10 +31,7 @@ export class CreateChallengeComponent {
 
   constructor(private challengeService: ChallengeService) { }
 
-  /**
-   * לוכד את הקובץ שנבחר על ידי המשתמש
-   * @param event אירוע שינוי הקלט (input change event)
-   */
+
   onFileSelected(event: any): void {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
@@ -56,9 +52,6 @@ export class CreateChallengeComponent {
 
     this.uploading = true;
 
-    // קורא לשירות עם נתוני האתגר והקובץ שנבחר
-   // ⭐ שינוי 2: קורא לשירות עם נתוני האתגר והקובץ (שיכול להיות null)
-    // ודא ששירות ה-uploadChallenge שלך תומך בקובץ שהוא null/undefined.
     this.challengeService.uploadChallenge(this.newChallenge, this.selectedFile).subscribe({
       next: (response) => {
         this.successMessage = `האתגר "${response.name}" נוצר בהצלחה!`;
@@ -73,15 +66,12 @@ export class CreateChallengeComponent {
           userId: 1 ,
           likeCount: 0,
           isLikedByCurrentUser: false
-// החלף ב-ID המשתמש האמיתי
         };
         this.selectedFile = null;
-        // איפוס הקלט של הקובץ ב-HTML אם צריך
       },
       error: (err) => {
         console.error('שגיאה בהעלאת האתגר:', err);
         this.errorMessage = 'אירעה שגיאה במהלך העלאת האתגר. אנא נסה שוב.';
-        // 💡 שורה שונתה: טיפול בשגיאת אימות (401/403)
         if (err.status === 401 || err.status === 403) {
           this.errorMessage = 'שגיאת אימות: עליך להיות מחובר כדי להעלות אתגר.'; // 💡 שורה שונתה
         } else {

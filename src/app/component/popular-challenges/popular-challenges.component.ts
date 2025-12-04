@@ -36,10 +36,9 @@ export class PopularChallengesComponent implements OnInit, OnDestroy {
   }
 
 loadPopularChallenges(): void {
-  this.challengeService.getPopularChallenges(12).subscribe({
+  this.challengeService.getPopularChallenges(7).subscribe({
     next: (data: any[]) => {
       this.popularChallenges = data.map((c: any) => {
-        // 🎯 הוספת בדיקה והדפסה לקונסול:
         if (c.picture && c.picture.length > 10) {
             console.log(`Challenge ${c.id}: Picture length: ${c.picture.length} (OK)`);
         } else {
@@ -73,7 +72,6 @@ loadPopularChallenges(): void {
     else this.itemsToShow = 3;
   }
 
-  // ← הפונקציות החדשות שהיו חסרות!
   maxIndex(): number {
     return Math.max(0, this.popularChallenges.length - this.itemsToShow);
   }
@@ -90,7 +88,6 @@ loadPopularChallenges(): void {
     const totalSlides = Math.ceil(this.popularChallenges.length / this.itemsToShow);
     return Array(totalSlides).fill(0).map((_, i) => i);
   }
-  // ← סוף הפונקציות
 
   prev(): void {
     if (this.currentIndex > 0) {

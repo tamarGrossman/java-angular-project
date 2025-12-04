@@ -15,8 +15,10 @@ import { SlicePipe } from '@angular/common';
   templateUrl: './uploaded-challenges.component.html',
   styleUrl: './uploaded-challenges.component.css'
 })
+//אתגרים שהעליתי
+
+
 export class UploadedChallengesComponent implements OnInit {
-// משתנה מסוג Observable שאליו נרשם ב-HTML
   uploadedChallenges$!: Observable<Challenge[]>;
   loading: boolean = true;
   error: string = '';
@@ -27,14 +29,12 @@ export class UploadedChallengesComponent implements OnInit {
     // קריאה לפונקציה החדשה
     this.uploadedChallenges$ = this.challengeService.getMyCreatedChallenges();
     
-    // ניהול מצב טעינה ושגיאות (שימוש ב-tap או subscribe):
     this.uploadedChallenges$.subscribe({
         next: (challenges) => {
             this.loading = false;
         },
         error: (err) => {
             this.loading = false;
-            // 💡 חשוב: אם השרת מחזיר 401, המשתמש לא מחובר או פג תוקף ה-Token
             if (err.status === 401) {
                 this.error = 'אינך מחובר או פג תוקף הסשן. אנא התחבר שוב.';
             } else {

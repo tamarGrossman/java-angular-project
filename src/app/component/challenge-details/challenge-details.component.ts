@@ -27,7 +27,7 @@ export class ChallengeDetailsComponent implements OnInit {
   comments: Comment[] = [];
 
 
-showCommentForm: boolean = true;    // ✅ שדה חדש: להצגת הודעת ההצלחה
+showCommentForm: boolean = true;    
     commentSuccessMessage: string | null = null;
 
   constructor(
@@ -66,14 +66,13 @@ showCommentForm: boolean = true;    // ✅ שדה חדש: להצגת הודעת 
   }
 onLikeStatusUpdated(status: { newCount: number; isLiked: boolean }) {
   if (this.challenge) {
-    // שורה 1: מעדכנים את האובייקט בצורה immutable (חובה!)
+    //  מעדכנים את האובייקט בצורה immutable (חובה!)
     this.challenge = {
       ...this.challenge,
       likeCount: status.newCount,
       isLikedByCurrentUser: status.isLiked
     };
 
-    // שורה 2: מודיעים לאנגולר במפורש "תבדוק שוב עכשיו!" (ליתר ביטחון)
     this.cdr.markForCheck();        
     this.cdr.detectChanges();       
   }
@@ -86,17 +85,10 @@ onLikeStatusUpdated(status: { newCount: number; isLiked: boolean }) {
   onCommentAddedSuccess(): void {
     this.loadComments(); // טוען את התגובה החדשה
     
-    // ✅ שלב 1: הצגת הודעת ההצלחה
+
     
-    // ✅ שלב 2: איפוס הטופס (על ידי הסתרתו לרגע והחזרתו)
-    // הערה: מכיוון ש-`app-add-comment` אינו משנה את עצמו, 
-    // הדרך הטובה ביותר לאפס אותו היא להסתירו ולחשוף אותו מחדש.
-    //this.showCommentForm = false; 
-    
-    // ✅ שלב 3: הסתרת הודעת ההצלחה והצגת הטופס מחדש לאחר 3 שניות
     setTimeout(() => {
         this.commentSuccessMessage = null; // מסתיר את ההודעה
-       // this.showCommentForm = true; // מחזיר את תיבת הטקסט (טופס)
         this.cdr.detectChanges();  // ודא שהתצוגה מתעדכנת (חובה לאחר שימוש ב-setTimeout)
     }, 3000);
   }
@@ -114,7 +106,6 @@ onLikeStatusUpdated(status: { newCount: number; isLiked: boolean }) {
                   showConfirmButton: false,
                   timer: 3000 // 3 שניות
                 });
-        console.log('Join Success:', response);
         this.isJoining = false;
         this.router.navigate(['/my-challenges']); 
       },
@@ -144,7 +135,7 @@ onLikeStatusUpdated(status: { newCount: number; isLiked: boolean }) {
       }
     });
   }
-
+//מביא את רשימת התגובות למטה
   loadComments(): void {
     this.commentService.getCommentsByChallengeId(this.challengeId)
       .subscribe({

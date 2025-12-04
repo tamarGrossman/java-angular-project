@@ -52,7 +52,6 @@ ngOnChanges(changes: SimpleChanges): void {
     // שליחה לשרת
     this.challengeService.addLikeChallenge(this.challengeId).subscribe({
       next: (res) => {
-        // קבלת הנתונים האמיתיים מהשרת
         const serverIsLiked = !!res.liked;
         const serverCount = Number(res.likeCount);
 
@@ -67,7 +66,6 @@ ngOnChanges(changes: SimpleChanges): void {
 
         this.isProcessing = false;
         
-        // ⭐⭐ הקסם: הפקודה הזו אומרת לאנגולר "תרענן את המספרים על המסך עכשיו!" ⭐⭐
         this.cdr.detectChanges();
       },
       error: (error) => {

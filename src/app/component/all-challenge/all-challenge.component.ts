@@ -17,7 +17,6 @@ import { RouterModule } from '@angular/router';
 export class AllChallengeComponent implements OnInit{
 
   challengeList: Challenge[] = []; 
-  // *** קוד חדש למוטיבציה ***
 motivationPhrases: string[] = [
     "🏆 ההצלחה שלך מחכה לך, רק תתחילי בצעד הראשון!",
     " את יכולה לעשות את זה! האמונה בעצמך היא הכוח הגדול ביותר. 💪",
@@ -28,7 +27,6 @@ motivationPhrases: string[] = [
   
   currentMotivationPhrase: string = this.motivationPhrases[0]; 
   
-  // משתנה בוליאני לשליטה על אנימציית הכניסה/יציאה (Angular class binding)
   isPhraseVisible: boolean = true;
 
   constructor(private challengeService: ChallengeService) { }
@@ -41,7 +39,6 @@ motivationPhrases: string[] = [
       error: (err) => {
         console.error("Error fetching challenges:", err);
       }
-      // ניתן להוסיף גם complete: () => { /* לוגיקה לאחר סיום */ }
     });
       this.startMotivationRotation();
     
@@ -68,9 +65,4 @@ startMotivationRotation(): void {
 
 }
 
-  /**
-   * מקבל מחרוזת Base64 ובונה את מחרוזת ה-Data URL שנדרשת לתג <img>.
-   * @param base64String מחרוזת Base64 של התמונה.
-   * @returns Data URL או מחרוזת ריקה.
-   */
 

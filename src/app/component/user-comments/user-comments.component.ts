@@ -1,26 +1,26 @@
-import { Component, OnInit } from '@angular/core'; // ✅ הוספת OnInit
+import { Component, OnInit } from '@angular/core'; 
 import { ActivatedRoute, Router } from '@angular/router';
-// ✅ הוספת האופרטורים הנדרשים לטיפול בשמות האתגרים
 import { catchError, of, switchMap, forkJoin, map } from 'rxjs'; 
 import { CommentService } from '../../service/comment.service';
 import { Comment } from '../../models/comment.model';
 import { DatePipe } from '@angular/common';
 import { ChallengeService } from '../../service/challenge.service';
-import { Challenge } from '../../models/challenge.model'; // 💡 ייבוא Challenge
+import { Challenge } from '../../models/challenge.model'; 
 import { RouterModule } from '@angular/router';
-// 🎯 הגדרת הטיפוס המורחב - חייבת להישאר!
 type CommentWithChallengeName = Comment & { challengeName: string };
 
 @Component({
   selector: 'app-user-comments',
-  imports: [DatePipe,RouterModule], // DatePipe נחוץ כ-import ב-standalone
+  imports: [DatePipe,RouterModule],
   standalone: true,
   templateUrl: './user-comments.component.html',
   styleUrl: './user-comments.component.css'
 })
-export class UserCommentsComponent implements OnInit { // ✅ מימוש OnInit
 
-  // ✅ תיקון קריטי: הגדרת המערך עם הטיפוס המורחב
+//תגובות שהעליתי
+
+export class UserCommentsComponent implements OnInit {
+
   userComments: CommentWithChallengeName[] = []; 
   
   isLoading = true;
@@ -38,7 +38,6 @@ export class UserCommentsComponent implements OnInit { // ✅ מימוש OnInit
     this.loadUserComments();
   }
 
-  // ✅ הוספת הפונקציה loadUserComments עם לוגיקת ה-forkJoin
   loadUserComments(): void {
     this.isLoading = true;
     this.commentService.getUserComments().pipe(
@@ -81,16 +80,13 @@ export class UserCommentsComponent implements OnInit { // ✅ מימוש OnInit
     });
   }
 
-  /**
-   * navigates the user to the details page of the challenge
-   * @param challengeId ID of the challenge to navigate to
-   */
+ 
+   
   navigateToChallengeDetails(challengeId: number): void {
     this.router.navigate(['/challenge/details', challengeId]);
   }
 
   private handleError(err: any): string {
-    // ... לוגיקת הטיפול בשגיאות נשארת זהה
     if (err.status === 403) {
       return 'אינך מורשה לצפות בתגובות אלו. (403)';
     } else if (err.status === 401) {

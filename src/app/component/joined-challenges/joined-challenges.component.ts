@@ -14,8 +14,7 @@ export class JoinedChallengesComponent {
 joinedChallenges: Challenge[] = [];
   isLoading: boolean = true;
   errorMessage: string | null = null;
-
-  // הוספת Router ל-Constructor
+//האתגרים שאני מצורף להם
   constructor(
     private challengeService: ChallengeService,
     private router: Router 
@@ -43,13 +42,9 @@ joinedChallenges: Challenge[] = [];
       });
   }
 
-  /**
-   * פונקציה לניווט לדף פרטי האתגר
-   * @param challengeId ה-ID של האתגר אליו רוצים לנווט
-   */
+  
 navigateToDetails(id: number | undefined) {
     if (id !== undefined) {
-      // ✅ תיקון קריטי: הפסיק מפריד בין הנתיב לפרמטר
       this.router.navigate(['/challenge', id]); 
     }
   }

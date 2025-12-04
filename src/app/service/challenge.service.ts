@@ -18,63 +18,44 @@ export class ChallengeService {
       return this.http.get<Challenge>(`${this.baseUrl}/getById${id}`);
     }
     
-    /**
-     * 💡 פונקציה מעודכנת לשליחת נתונים בפורמט FormData
-     * @param challengeData נתוני האתגר
-     * @param imageFile קובץ התמונה (File)
-     */
+  
+     
     uploadChallenge(challengeData: Challenge, imageFile?: File | null): Observable<Challenge>{
-      // 1. יצירת אובייקט FormData
       const formData = new FormData();
   
       if (imageFile) {
-        // 2. הוספת קובץ התמונה תחת המפתח "image"
-        // אם imageFile אינו null, נוסיף אותו
         formData.append('image', imageFile, imageFile.name);
       }
-      // 2. הוספת קובץ התמונה תחת המפתח "image"
-      // תואם ל- @RequestPart("image") ב-Java  
-      // 3. הוספת נתוני האתגר כאובייקט JSON תחת המפתח "challenge"
-      // תואם ל- @RequestPart("challenge") ב-Java
-      // ממירים את אובייקט ה-Challenge למחרוזת JSON באמצעות Blob
       formData.append('challenge', new Blob([JSON.stringify(challengeData)], {
         type: 'application/json'
       }));
-  
-      // 4. שליחת הבקשה לפונקציה createChallenge
-      return this.http.post<Challenge>(`${this.baseUrl}/create`, formData,{withCredentials: true})
+        return this.http.post<Challenge>(`${this.baseUrl}/create`, formData,{withCredentials: true})
       ;
     }
+
   joinChallenge(challengeId: number): Observable<any> {
-    // ⬅️ הוספנו { responseType: 'text' } כדי לצפות למחרוזת
     return this.http.post(`${this.baseUrl}/join/${challengeId}`, null, {
         withCredentials: true,
-        responseType: 'text' // <--- התיקון הקריטי
+        responseType: 'text' 
     });
 }
   
 
   getMyCreatedChallenges(): Observable<Challenge[]> {
-    
-    // חיוני: withCredentials: true כדי לשלוח את ה-Cookie/Session Token
-    const httpOptions = {
+        const httpOptions = {
         headers: new HttpHeaders({ 
             'Content-Type': 'application/json' 
         }),
         withCredentials: true 
     };
-    
-    const url = `${this.baseUrl}/uploadedBy`; // 👈 שימוש בנתיב החדש
-    
-    // ביצוע קריאת ה-GET. אנו מצפים לקבל רשימת ChallengeDto
-    return this.http.get<Challenge[]>(url, httpOptions);
+    const url = `${this.baseUrl}/uploadedBy`; 
+        return this.http.get<Challenge[]>(url, httpOptions);
   }
+
 // קבלת אתגרים למשתמש שהצטרף אליהם
 getJoinedChallenges(): Observable<Challenge[]> {
     const fullUrl = `${this.baseUrl}/joinedChallenges`;
-    
-    // 💡 הוספת withCredentials: true
-    return this.http.get<Challenge[]>(fullUrl, {
+        return this.http.get<Challenge[]>(fullUrl, {
       withCredentials: true 
     });
   }
@@ -85,10 +66,8 @@ addLikeChallenge(challengeId: number): Observable<any> {
         withCredentials: true,
     });
 }
-// אחרי הפונקציות הקיימות שלך (למשל אחרי getJoinedChallenges או addLikeChallenge)
 
 getPopularChallenges(limit?: number): Observable<Challenge[]> {
-  // פשוט קוראים ל-/popular בלי פרמטרים
   return this.http.get<Challenge[]>(`${this.baseUrl}/popular`, { withCredentials: true });
 }
 }

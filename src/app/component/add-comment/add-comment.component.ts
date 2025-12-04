@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { HttpErrorResponse } from '@angular/common/http'; 
 import { CommentService } from '../../service/comment.service';
 import { Comment } from '../../models/comment.model'; 
-import { FormsModule, NgForm } from '@angular/forms'; // ✅ הוספת NgForm
+import { FormsModule, NgForm } from '@angular/forms'; 
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -14,7 +14,7 @@ import { NgClass } from '@angular/common';
 })
 export class AddCommentComponent {
   
-  @ViewChild('commentForm') commentForm!: NgForm; // ✅ גישה לטופס ה-HTML
+  @ViewChild('commentForm') commentForm!: NgForm; 
   @Input() challengeId: number | undefined;  
   @Output() commentAdded = new EventEmitter<void>();
 
@@ -26,18 +26,13 @@ export class AddCommentComponent {
 
   constructor(private commentService: CommentService) { }
 
-  /**
-   * מטפל בלוגיקה של הצלחה (קריאה מה-next או מה-error handler המטפל ב-201).
-   */
-  handleSuccess(): void {
-    console.log('1. [ADD_COMMENT] START HANDLE SUCCESS: Setting message.');
+    handleSuccess(): void {
     this.message = '✅ התגובה נוספה בהצלחה!';
 
     this.isError = false;
     this.commentContent = '';
     this.selectedFile = null;
     
-    // ✅ איפוס הסטטוס של הטופס
     this.commentForm.resetForm({ commentContent: '' }); 
     
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
@@ -45,7 +40,6 @@ export class AddCommentComponent {
         fileInput.value = ''; 
     } 
     
-    console.log('2. [ADD_COMMENT] EMITTING EVENT: Telling parent to refresh comments list.');
     this.commentAdded.emit(); 
     
     setTimeout(() => {
@@ -54,9 +48,7 @@ export class AddCommentComponent {
     }, 3000); 
   }
   
-  /**
-   * לוכד את הקובץ שנבחר
-   */
+ 
   onFileSelected(event: any): void {
     const fileList: FileList = event.target.files;
     if (fileList && fileList.length > 0) {
@@ -66,9 +58,7 @@ export class AddCommentComponent {
     }
   }
 
-  /**
-   * ✅ עדכון: בדיקת תקינות הטופס לפני בניית ה-FormData
-   */
+  
   submitComment(): void {
     // ⭐ בדיקה קריטית: אם טופס ה-HTML אינו תקין (כלומר, ה-minlength/maxlength נכשל), עצור!
     if (this.commentForm.invalid) {
@@ -77,7 +67,7 @@ export class AddCommentComponent {
       return;
     }
 
-    // בדיקת האתגר ID (נותר מהבדיקה הקודמת שלך)
+    // בדיקת האתגר)
     if (!this.challengeId) { 
       this.isError = true;
       this.message = 'שגיאת מערכת: לא נמצא ID אתגר.'; 
@@ -96,7 +86,6 @@ export class AddCommentComponent {
         content: this.commentContent,
     };
 
-    // 3. הוספת ה-JSON כ-BLOB (חלק ה-"commentData")
     const commentBlob = new Blob([JSON.stringify(commentDataDto)], { type: 'application/json' });
     formData.append('commentData', commentBlob); 
 
@@ -117,13 +106,16 @@ export class AddCommentComponent {
           if (status === 201 || status === 200 || status === 0) { 
             // טיפול בשגיאת פרסור/CORS/201
             this.handleSuccess();
+          
           } else {
-            // ❌ שגיאה אמיתית (4xx, 5xx) - צריך לטפל בשגיאות ה-Java כאן!
             this.isError = true;
-            // 💡 ניתן לשלוף שגיאות ספציפיות אם ה-Java מחזיר אותן בפורמט JSON
             const errorMessage = err.error?.message || err.message || `סטטוס: ${status}. שגיאת שרת לא ידועה.`;
             this.message = `שגיאה בשליחת התגובה: ${errorMessage}`;
           }
+          if(status===403){
+                          this.message = "עליך להתחבר כדי להעלות תגובה";
+
+          }
         },
         complete: () => {
           this.isLoading = false;

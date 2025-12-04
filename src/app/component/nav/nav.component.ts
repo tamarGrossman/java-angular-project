@@ -17,12 +17,10 @@ export class NavComponent implements OnInit {
   }
   title = 'chalengesproject';
   
-  // משתנה Observable שמשקף את סטטוס ההתחברות.
-  // נשתמש ב- | async ב-HTML.
+  
   isLoggedIn$: Observable<boolean>; 
-
+//משמשמש כדי לדעת מה לשים בניווט 
   constructor(private usersService: usersService) {
-    // השמת המשתנה הציבורי מהשירות.
     this.isLoggedIn$ = this.usersService.isLoggedIn$;
   }
 }

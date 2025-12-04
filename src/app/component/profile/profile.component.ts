@@ -23,32 +23,21 @@ export class ProfileComponent implements OnInit{
 currentUser: Users | null = null;
   constructor(private router: Router, private userService: usersService) { }
   ngOnInit(): void {
-    // 💡💡💡 שינוי קריטי: הרשמה ל-currentUser$
     this.subscription = this.userService.currentUser$.subscribe(username => {
         this.currentUsername = username;
-        // כדאי לבדוק אם יש שם משתמש כדי לדעת אם סיימת לטעון (במקום ה-isLoading הנוכחי)
-        // אבל נשאיר את ה-isLoading הנוכחי כמו שהוא כדי לא לשנות יותר מדי
         if (this.currentUsername && this.currentUsername !== '') {
             this.isLoading = false;
         } else {
-             // אם המשתמש לא מחובר או השם לא נטען, המשתמש צריך לחכות
-            this.isLoading = false; // או להישאר true אם מצפים שנטען אותו מחדש
+            this.isLoading = false; 
         }
     });
 
-    // ככל הנראה, תרצה לשלוף את ה-ID כאן גם
-    // this.isLoading = false; 
   }
   
-  // 💡 מומלץ: ביטול ההרשמה בעת השמדת הקומפוננטה
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  /**
-   * פונקציית ניווט כללית לפי נתיב.
-   * @param routePath הנתיב הבסיסי לניווט (למשל, 'my-challenges')
-   */
 }

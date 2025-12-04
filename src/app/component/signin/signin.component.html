@@ -44,7 +44,7 @@
                         name="password"
                         [(ngModel)]="user.password"
                         required
-                        minlength="4"  
+                        minlength="3"  
                         maxlength="10" 
                         #passwordInput="ngModel">
                         
@@ -57,7 +57,7 @@
                             
                             @if (passwordInput.errors?.['minlength'] || passwordInput.errors?.['maxlength']) {
                                 <small>
-                                    אורך הסיסמה חייב להיות בין 4 ל-10 תווים.
+                                    אורך הסיסמה חייב להיות בין 3 ל-10 תווים.
                                 </small>
                             }
                         </div>

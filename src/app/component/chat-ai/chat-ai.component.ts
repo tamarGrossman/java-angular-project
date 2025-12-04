@@ -43,13 +43,10 @@ messages: Message[] = [];
     // 3. קריאה ל-Service והאזנה לזרם הנתחים (Chunks)
     this.chatService.sendMessageStream(userMessage, this.conversationId)
       .subscribe({
-        // 💡 ה-NEXT מופעל עבור כל נתח JSON שמתקבל מה-Flux
         next: (chunk: ChatResponse) => {
-          // השתמש/י ב-chunk.message, כי זה שם השדה ב-Java record
           if (this.currentBotMessageIndex !== -1) {
              this.messages[this.currentBotMessageIndex].content += chunk.message; // ✅ שימוש בשם הנכון
           }
-          // 💡 ניתן להוסיף כאן לוגיקה לגלילה אוטומטית לתחתית
         },
         error: (err) => {
           console.error('שגיאה בתקשורת עם שירות ה-AI:', err);

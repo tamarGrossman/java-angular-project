@@ -45,7 +45,6 @@ export class ChatService {
           const { done, value } = await reader.read();
           if (done) break;
 
-          // פענוח הנתח הנוכחי והוספתו לבאפר
           const chunk = decoder.decode(value, { stream: true });
           buffer += chunk;
           

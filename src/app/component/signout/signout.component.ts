@@ -10,12 +10,11 @@ import { take } from 'rxjs/operators';
 })
 export class SignoutComponent implements OnInit{
 message: string = '';
-  isLoggedIn: boolean = true; // מצב התחברות מקומי
+  isLoggedIn: boolean = true; 
 
   constructor(private usersService: usersService) {}
 
   ngOnInit() {
-  // בדיקה חד־פעמית אם המשתמש כבר מנותק
   this.usersService.isLoggedIn$.pipe(take(1)).subscribe(status => {
     this.isLoggedIn = status;
     if (!status) {
@@ -23,10 +22,8 @@ message: string = '';
     }
   });
 
-    // 💡 פשוט מאזינים לשינויים במצב ההתחברות
     this.usersService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
-      // מנקה הודעה כשמצב משתנה (למשל, אחרי התחברות/התנתקות מוצלחת)
        if (status) {
       this.message = '';
     } 
@@ -51,6 +48,5 @@ message: string = '';
         console.error('Signout failed', err);
         this.message = 'אירעה שגיאה בעת ההתנתקות. נסה שוב.';
         
-        // 💡💡💡 השתמש במתודה הציבורית החדשה 💡💡💡
     }});
 }}
